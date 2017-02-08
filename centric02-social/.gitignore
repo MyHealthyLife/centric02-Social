@@ -4,3 +4,4 @@ WebContent/WEB-INF/lib/
 ivy/
 build_ant/
 centric01-main.war
+/bin/
