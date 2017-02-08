@@ -39,18 +39,6 @@ public interface Sentences {
 
     /**
      * 
-     * @param sentence
-     */
-    @WebMethod
-    @RequestWrapper(localName = "createSentence", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.CreateSentence")
-    @ResponseWrapper(localName = "createSentenceResponse", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.CreateSentenceResponse")
-    @Action(input = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceRequest", output = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceResponse")
-    public void createSentence(
-        @WebParam(name = "sentence", targetNamespace = "", mode = WebParam.Mode.INOUT)
-        Holder<Sentence> sentence);
-
-    /**
-     * 
      * @param sentenceId
      * @return
      *     returns myhealthylife.sentencegenerator.soap.Sentence
@@ -63,6 +51,18 @@ public interface Sentences {
     public Sentence readSentence(
         @WebParam(name = "sentenceId", targetNamespace = "")
         long sentenceId);
+
+    /**
+     * 
+     * @param sentence
+     */
+    @WebMethod
+    @RequestWrapper(localName = "createSentence", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.CreateSentence")
+    @ResponseWrapper(localName = "createSentenceResponse", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.CreateSentenceResponse")
+    @Action(input = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceRequest", output = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceResponse")
+    public void createSentence(
+        @WebParam(name = "sentence", targetNamespace = "", mode = WebParam.Mode.INOUT)
+        Holder<Sentence> sentence);
 
     /**
      * 
@@ -120,6 +120,24 @@ public interface Sentences {
 
     /**
      * 
+     * @param motive
+     * @param sentenceType
+     * @return
+     *     returns myhealthylife.sentencegenerator.soap.Sentence
+     */
+    @WebMethod
+    @WebResult(name = "sentence", targetNamespace = "")
+    @RequestWrapper(localName = "readRandomSentenceByTypeAndTrend", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.ReadRandomSentenceByTypeAndTrend")
+    @ResponseWrapper(localName = "readRandomSentenceByTypeAndTrendResponse", targetNamespace = "http://soap.sentencegenerator.myhealthylife/", className = "myhealthylife.sentencegenerator.soap.ReadRandomSentenceByTypeAndTrendResponse")
+    @Action(input = "http://soap.sentencegenerator.myhealthylife/Sentences/readRandomSentenceByTypeAndTrendRequest", output = "http://soap.sentencegenerator.myhealthylife/Sentences/readRandomSentenceByTypeAndTrendResponse")
+    public Sentence readRandomSentenceByTypeAndTrend(
+        @WebParam(name = "sentenceType", targetNamespace = "")
+        String sentenceType,
+        @WebParam(name = "motive", targetNamespace = "")
+        Boolean motive);
+
+    /**
+     * 
      * @return
      *     returns myhealthylife.sentencegenerator.soap.SentenceTypeList
      */
@@ -132,6 +150,7 @@ public interface Sentences {
 
     /**
      * 
+     * @param motive
      * @param typeName
      * @return
      *     returns myhealthylife.sentencegenerator.soap.SentenceType
@@ -143,7 +162,9 @@ public interface Sentences {
     @Action(input = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceTypeRequest", output = "http://soap.sentencegenerator.myhealthylife/Sentences/createSentenceTypeResponse")
     public SentenceType createSentenceType(
         @WebParam(name = "typeName", targetNamespace = "")
-        String typeName);
+        String typeName,
+        @WebParam(name = "motive", targetNamespace = "")
+        Boolean motive);
 
     /**
      * 
