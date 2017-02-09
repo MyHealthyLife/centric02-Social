@@ -14,6 +14,7 @@ public class Goal {
 	private Double actualValue;
 	private Double difference;
 	private String goalName;
+	private String sex;
 	
 	public Goal(){
 		
@@ -53,5 +54,13 @@ public class Goal {
 
 	public void setGoalName(String goalName) {
 		this.goalName = goalName;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 }
