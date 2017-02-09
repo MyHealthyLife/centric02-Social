@@ -1,0 +1,67 @@
+package myhealthylife.centric2.rest;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import myhealthylife.centric2.rest.model.DedicatedSentence;
+import myhealthylife.centric2.util.ServicesLocator;
+import myhealthylife.centric2.util.Utilities;
+import myhealthylife.dataservice.soap.DataService;
+import myhealthylife.dataservice.soap.Person;
+import myhealthylife.nutritionservice.soap.FoodList;
+import myhealthylife.nutritionservice.soap.Foods;
+import myhealthylife.sentencegenerator.soap.Sentence;
+import myhealthylife.sentencegenerator.soap.Sentences;
+
+
+
+@Path("/sentence")
+public class SentenceHandler {
+
+	
+	@Path("/{username1}/{username2}/{sentenceId}")
+	@POST
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response dedicateSentenceToUser(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("sentenceId") Integer sentenceId){
+
+		DataService ds = ServicesLocator.getDataServiceConnection();
+		Sentences ss = ServicesLocator.getSentenceGeneratorConnection();
+		
+		// Gets the first and the second user
+		Person user1 = ds.getPersonByUsername(username1);
+		Person user2 = ds.getPersonByUsername(username2);
+		
+		// Gets the sentence the user wants to dedicate
+		Sentence sentenceToDedicate = ss.readSentence(sentenceId);
+		
+		// Checks if all three entities exist
+		if(user1==null && user2==null && sentenceToDedicate==null) {
+			
+			return Utilities.throwResourceNotFound();
+			
+		}
+		
+		DedicatedSentence dedicatedS = new DedicatedSentence();
+
+		// Fills the entity with some data
+		dedicatedS.setIdUserOne(user1.getIdPerson());
+		dedicatedS.setIdUserTwo(user2.getIdPerson());
+		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
+		
+		// Saves the entity into the database
+		DedicatedSentence.saveDedicatedSentence(dedicatedS);
+        
+        // Returns the dedicated sentence
+		return Utilities.throwOK(dedicatedS);
+		
+	}
+	
+}

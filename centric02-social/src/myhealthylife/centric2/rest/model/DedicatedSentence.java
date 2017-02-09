@@ -36,13 +36,13 @@ public class DedicatedSentence implements Serializable {
 	private long idDedicatedSentence;
 
 	@Column(name="userone")
-	private Integer idUserOne;
+	private Long idUserOne;
 	
 	@Column(name="usertwo")
-	private Integer idUserTwo;
+	private Long idUserTwo;
 
 	@Column(name="sentence")
-	private Integer idSentence;
+	private Long idSentence;
 	
 	
 	public DedicatedSentence() {
@@ -59,37 +59,39 @@ public class DedicatedSentence implements Serializable {
 	}
 
 
-	public Integer getIdUserOne() {
+	
+	
+	
+	public Long getIdUserOne() {
 		return idUserOne;
 	}
 
 
-	public void setIdUserOne(Integer idUserOne) {
+	public void setIdUserOne(Long idUserOne) {
 		this.idUserOne = idUserOne;
 	}
 
 
-	public Integer getIdUserTwo() {
+	public Long getIdUserTwo() {
 		return idUserTwo;
 	}
 
 
-	public void setIdUserTwo(Integer idUserTwo) {
+	public void setIdUserTwo(Long idUserTwo) {
 		this.idUserTwo = idUserTwo;
 	}
 
 
-	public Integer getIdSentence() {
+	public Long getIdSentence() {
 		return idSentence;
 	}
 
 
-	public void setIdSentence(Integer idSentence) {
+	public void setIdSentence(Long idSentence) {
 		this.idSentence = idSentence;
 	}
-	
-	
-	
+
+
 	/* DATABASE OPERATIONS */
 	public static DedicatedSentence getDedicatedSentenceById(long dedicatedSentenceId) {
 		EntityManager em = CentricServiceDao.instance.createEntityManager();

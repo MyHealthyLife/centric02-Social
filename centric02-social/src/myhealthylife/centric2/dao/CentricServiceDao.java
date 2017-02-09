@@ -17,7 +17,7 @@ public enum CentricServiceDao {
 		if (emf!=null) {
 			emf.close();
 		}
-		emf = Persistence.createEntityManagerFactory("centric02-Social");
+		emf = Persistence.createEntityManagerFactory("centric02-social");
 	}
 	
 	public EntityManager createEntityManager() {
@@ -43,7 +43,6 @@ public enum CentricServiceDao {
 	}
 	
 	// Sentence related operations could also directly go into the "Sentence" Model
-	// Check Methods in LifeStaus as example
 	public static DedicatedSentence getDedicatedSentenceById(Long sentenceId) {
 		EntityManager em = instance.createEntityManager();
 		DedicatedSentence p = em.find(DedicatedSentence.class, sentenceId);
@@ -58,6 +57,5 @@ public enum CentricServiceDao {
 	    return list;
 	}
 	
-	// add other database global access operations
 
 }
