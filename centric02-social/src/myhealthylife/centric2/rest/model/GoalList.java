@@ -4,15 +4,17 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import myhealtylife.optimalparamters.soap.Parameter;
+
 @XmlRootElement(name="goal_element")
 public class GoalList {
-	private List<Goal> goals;
+	private List<Parameter> goals;
 
-	public List<Goal> getGoals() {
+	public List<Parameter> getGoals() {
 		return goals;
 	}
 
-	public void setGoals(List<Goal> goals) {
+	public void setGoals(List<Parameter> goals) {
 		this.goals = goals;
 	}
 }

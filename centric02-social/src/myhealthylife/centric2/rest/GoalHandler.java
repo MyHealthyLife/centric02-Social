@@ -16,6 +16,7 @@ import myhealthylife.centric2.rest.model.GoalList;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealtylife.optimalparamters.soap.OptimalParameters;
 import myhealtylife.optimalparamters.soap.Parameter;
+import myhealtylife.optimalparamters.soap.ParametersList;
 
 @Path("/goal")
 public class GoalHandler {
@@ -23,17 +24,51 @@ public class GoalHandler {
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public GoalList getGoals(@QueryParam("sex")String sex, @QueryParam("ageFrom")String ageTo, @QueryParam("ageTo") String ageFrom ){
+	public GoalList getGoals(@QueryParam("sex")String sex, @QueryParam("ageFrom")Integer ageFrom, @QueryParam("ageTo") Integer ageTo ){
 		
 		GoalList gl=new GoalList();
 		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
 		
 		if(sex==null){
-			List<Parameter> param= op.readOptimalParameters().getParameters();
-			gl.setGoals(paramToGoal(param));
+			if(ageFrom==null && ageTo==null){
+				List<Parameter> param= op.readOptimalParameters().getParameters();
+				gl.setGoals(param);
+				
+			}
+			else{
+				if(ageFrom==null){
+					ageFrom=0;
+				}
+				
+				if(ageTo==null){
+					ageTo=200;
+				}
+				
+				List<Parameter> paramM=op.readOptimalParametersBySexAngAgeRange("M", ageFrom, ageTo).getParameters();
+				List<Parameter> paramF=op.readOptimalParametersBySexAngAgeRange("F", ageFrom, ageTo).getParameters();
+				ArrayList<Parameter> tot=new ArrayList<Parameter>();
+				tot.addAll(paramM);
+				tot.addAll(paramF);
+				
+				gl.setGoals(tot);
+			}
 		}else {
 			if(ageFrom==null && ageTo==null){
-				//gl.setGoals(paramToGoal(op.read));
+				List<Parameter> param=op.readOptimalParametersBySex(sex).getParameters();
+				gl.setGoals(param);
+			}
+			else{
+				if(ageFrom==null){
+					ageFrom=0;
+				}
+				
+				if(ageTo==null){
+					ageTo=200;
+				}
+				
+				
+				List<Parameter> list=op.readOptimalParametersBySexAngAgeRange(sex, ageFrom, ageTo).getParameters();
+				gl.setGoals(list);
 			}
 		}
 		
