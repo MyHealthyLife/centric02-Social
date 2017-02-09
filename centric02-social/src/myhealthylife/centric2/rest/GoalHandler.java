@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 import myhealthylife.centric2.rest.model.Goal;
 import myhealthylife.centric2.rest.model.GoalList;
 import myhealthylife.centric2.util.ServicesLocator;
+import myhealtylife.optimalparamters.soap.AgeRangeList;
 import myhealtylife.optimalparamters.soap.OptimalParameters;
 import myhealtylife.optimalparamters.soap.Parameter;
 import myhealtylife.optimalparamters.soap.ParametersList;
@@ -78,6 +80,14 @@ public class GoalHandler {
 		
 	}
 	
+	@GET
+	@Path("/ageranges")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public AgeRangeList getAgeRanges(){
+		return ServicesLocator.getOptimalParameterConnection().readAgeRanges();
+	}
+	
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -90,6 +100,14 @@ public class GoalHandler {
 		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
 		p=op.createParameter(p);
 		return p;
+	}
+	
+	@PUT
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Parameter editGoal(Parameter p){
+		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
+		return op.updateParameter(p);
 	}
 	
 	private List<Goal> paramToGoal(List<Parameter> param){
