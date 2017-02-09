@@ -26,11 +26,7 @@ public class FoodHandler {
 		Foods fs = ServicesLocator.getFoodServiceConnection();
 		
 		// Gets the foods to return
-        FoodList foodListToReturn = fs.findFoodByTypeFilteredByCalories(maxCal);
-        
-        if(foodListToReturn==null) {
-        	foodListToReturn = fs.readFoodList();
-        }
+        FoodList foodListToReturn = fs.findFoodByTypeFiltered(typeName, maxCal);
         
         // Returns the random sentence
 		return Utilities.throwOK(foodListToReturn);
