@@ -28,7 +28,7 @@ public class FoodHandler {
 		// Gets the foods to return
         FoodList foodListToReturn = fs.findFoodByTypeFiltered(typeName, maxCal);
         
-        // Returns the random sentence
+        // Returns the list of foods
 		return Utilities.throwOK(foodListToReturn);
 		
 	}
