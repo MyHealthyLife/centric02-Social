@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import myhealthylife.centric2.rest.model.Goal;
 import myhealthylife.centric2.rest.model.GoalList;
@@ -74,6 +76,20 @@ public class GoalHandler {
 		
 		return gl;
 		
+	}
+	
+	@POST
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	/**
+	 * create a new goal (a.k.a. a parameter for the service03)
+	 * @param p
+	 * @return
+	 */
+	public Parameter createNewGoal(Parameter p){
+		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
+		p=op.createParameter(p);
+		return p;
 	}
 	
 	private List<Goal> paramToGoal(List<Parameter> param){
