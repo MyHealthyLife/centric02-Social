@@ -18,7 +18,7 @@ import myhealtylife.optimalparamters.soap.OptimalParameters;
 import myhealtylife.optimalparamters.soap.Parameter;
 import myhealtylife.optimalparamters.soap.ParametersList;
 
-@Path("/goal")
+@Path("/goals")
 public class GoalHandler {
 
 	@GET
