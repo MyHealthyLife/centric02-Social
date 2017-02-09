@@ -1,5 +1,8 @@
 package myhealthylife.centric2.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -63,5 +66,55 @@ public class SentenceHandler {
 		return Utilities.throwOK(dedicatedS);
 		
 	}
+	
+	
+	
+	@Path("/{username}")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getDedicatedSentences(@PathParam("username") String username){
+
+		DataService ds = ServicesLocator.getDataServiceConnection();
+		Sentences ss = ServicesLocator.getSentenceGeneratorConnection();
+		
+		// Gets the user
+		Person user = ds.getPersonByUsername(username);
+		
+		// Checks if all three entities exist
+		if(user==null) {
+			
+			return Utilities.throwResourceNotFound();
+			
+		}
+		
+		// Lists of dedicated sentences
+		List<DedicatedSentence> dedicatedSListAll = DedicatedSentence.getAll();
+		List<DedicatedSentence> dedicatedSListForUser = new ArrayList<>();
+		
+		for(int i=0;i<dedicatedSListAll.size();i++) {
+			
+			DedicatedSentence currentDS = dedicatedSListAll.get(i);
+			
+			// Checks if the second user id is equal to the user
+			if(currentDS.getIdUserTwo()==user.getIdPerson()) {
+				
+				dedicatedSListForUser.add(currentDS);
+				
+			}
+		}
+		
+		// Checks if the list is empty
+		if(dedicatedSListForUser.isEmpty()) {
+			
+			return Utilities.throwNoContent();
+			
+		}
+        
+        // Returns the list of dedicated sentence for the user
+		return Utilities.throwOK(dedicatedSListForUser);
+		
+	}
+	
 	
 }
