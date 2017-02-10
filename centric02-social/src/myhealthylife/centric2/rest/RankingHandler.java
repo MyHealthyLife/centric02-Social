@@ -1,5 +1,12 @@
 package myhealthylife.centric2.rest;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,14 +19,23 @@ import javax.ws.rs.core.Response;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
 import myhealthylife.dataservice.soap.DataService;
+import myhealthylife.dataservice.soap.HealthProfile;
+import myhealthylife.dataservice.soap.Measure;
+import myhealthylife.dataservice.soap.MeasureHistory;
 import myhealthylife.dataservice.soap.Person;
-import myhealthylife.nutritionservice.soap.FoodList;
-import myhealthylife.nutritionservice.soap.Foods;
+import myhealtylife.optimalparamters.soap.AgeRange;
+import myhealtylife.optimalparamters.soap.OptimalParameters;
+import myhealtylife.optimalparamters.soap.Parameter;
+import myhealtylife.optimalparamters.soap.ParametersList;
 
 
 @Path("/ranking")
 public class RankingHandler {
 
+	final private double STEPS_POINTS = 0.01;
+	final private double WEIGHT_DISTANCE_POINTS_MAX = 100;
+	final private double WEIGHT_DISTANCE_POINTS_MIN = 1;
+	final private double WEIGHT_DISTANCE_MULFACTOR = 5;
 	
 	@Path("/{username}")
 	@GET
@@ -27,13 +43,124 @@ public class RankingHandler {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Response getUserRank(@PathParam("username") String username){
 
+		int yearToday = Calendar.getInstance().get(Calendar.YEAR);
+		
 		DataService ds = ServicesLocator.getDataServiceConnection();
+		OptimalParameters gs = ServicesLocator.getOptimalParameterConnection();
 		
 		// Gets the user from service 1
 		Person user = ds.getPersonByUsername(username);
 		
+		// Gets the global optimal parameters
+		List<Parameter> pl = gs.readOptimalParameters().getParameters();
+		
+		// Gets the name of all the users
+		List<Person> personList = ds.listPeople().getPerson();
+		
+		// The set with the assigned points for each user
+		Map<String,Double> usersAndSteps = new HashMap<String,Double>();
+		
+		
+		// For all the people in the database
+		for(int i=0;i<personList.size();i++) {
+			
+			// Gets the data of the user
+			Person singlePerson = personList.get(i);
+			HealthProfile spHp = singlePerson.getHealthProfile();
+			MeasureHistory mh = ds.getMeasureHistory(singlePerson.getIdPerson());
+			
+			if(mh!=null) {
+			
+				//List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasure();
+				List<Measure> measureSP = mh.getMeasures();
+				
+				// Assigns point to each user for the number of steps and weight
+				for(int j=0;j<measureSP.size();j++) {
+
+					Measure singleMeasure = measureSP.get(j);
+				
+					// Assigns points for "steps" measure
+					if(singleMeasure.getMeasureType().equals("steps")) {
+						
+						// Check if we do not have a record for that user
+						if(usersAndSteps.get(singlePerson.getUsername())==null) {
+							usersAndSteps.put(singlePerson.getUsername(), singleMeasure.getMeasureValue() * this.STEPS_POINTS);
+						}
+						
+						// Otherwise we just have to update the existing one
+						else {
+							Double previousValue = usersAndSteps.get(singlePerson.getUsername());
+							usersAndSteps.put(singlePerson.getUsername(), previousValue += (singleMeasure.getMeasureValue() * this.STEPS_POINTS));
+						}
+					}
+					
+					
+					
+					
+				}
+				
+				
+			}
+			
+			
+			// Checks if the healthprofile is null
+			if(spHp!=null) {
+				
+				List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasure();
+				
+				// Assigns point to each user for the number of steps and weight
+				for(int j=0;j<measureSP.size();j++) {
+					
+					Measure singleMeasure = measureSP.get(j);
+
+					
+					// Assigns points for "weight" measure
+					if(singleMeasure.getMeasureType().equals("weight")) {
+	
+						int personAge = yearToday - singlePerson.getBirthdate().getYear();
+						
+						
+						for(int k=0;k<pl.size();k++) {
+							
+							Parameter singleParameter = pl.get(k);
+							AgeRange spAgeRange = singleParameter.getAgeRange();
+							
+							if(spAgeRange.getFromAge() < personAge && personAge < spAgeRange.getToAge() && singleParameter.getSex().equals(singlePerson.getSex()) && singleParameter.getParameterName().equals("weight")) {
+								
+								Double pointsToAssign = this.WEIGHT_DISTANCE_POINTS_MAX - (Math.abs(singleParameter.getValue() - singleMeasure.getMeasureValue()) * this.WEIGHT_DISTANCE_MULFACTOR);
+								
+								// The minimum points to assign is one
+								if(pointsToAssign < 0) {
+									pointsToAssign = this.WEIGHT_DISTANCE_POINTS_MIN;
+								}
+								
+								// Add or update the points
+								if(usersAndSteps.get(singlePerson.getUsername())==null) {
+									usersAndSteps.put(singlePerson.getUsername(), pointsToAssign);
+								}
+								
+								else {
+									System.out.println("Added +" + singleMeasure.getMeasureValue());
+									Double previousValue = usersAndSteps.get(singlePerson.getUsername());
+									usersAndSteps.put(singlePerson.getUsername(), previousValue += (pointsToAssign));
+								}
+								
+							}
+							
+						}
+						
+						
+					}
+					
+				}
+				
+			}
+			
+			
+		}
+		
         // Returns
-		return Utilities.throwOK(user);
+		return Utilities.throwOK(usersAndSteps);
 		
 	}
 	
