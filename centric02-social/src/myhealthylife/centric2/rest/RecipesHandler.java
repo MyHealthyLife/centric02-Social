@@ -10,6 +10,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,7 +24,7 @@ public class RecipesHandler {
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public RecipeList hello(){
+	public RecipeList hello(@QueryParam("maxCal") Long maxCal){
 		RecipeList rl=new RecipeList();
 		rl.setRecipes(Recipe.getAll());
 		Iterator<Recipe> it=rl.getRecipes().iterator();
@@ -32,9 +33,19 @@ public class RecipesHandler {
 			Recipe r=it.next();
 			r.computeFoods();
 			r.computeCalories();
+			
+			
 		}
 		
-		//TODO calories
+		for(int i=0;i<rl.getRecipes().size();i++){
+			Recipe r=rl.getRecipes().get(i);
+			if(maxCal!=null){
+				if(r.getCalories()>maxCal){
+					rl.getRecipes().remove(r);
+					i--;
+				}
+			}
+		}
 		
 		return rl;
 	}
