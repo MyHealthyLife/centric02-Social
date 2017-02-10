@@ -25,7 +25,7 @@ import myhealthylife.centric2.dao.CentricServiceDao;
 @Table(name="DedicatedSentence")
 @NamedQuery(name="DedicatedSentence.findAll", query="SELECT d FROM DedicatedSentence d")
 @XmlRootElement(name="dedicatedSentence")
-@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "idSentence"})
+@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "idSentence", "sentenceText"})
 public class DedicatedSentence implements Serializable {
 
 
@@ -41,9 +41,11 @@ public class DedicatedSentence implements Serializable {
 	@Column(name="usertwo")
 	private Long idUserTwo;
 
-	@Column(name="sentence")
+	@Column(name="idSentence")
 	private Long idSentence;
 	
+	@Column(name="sentencetext")
+	private String sentenceText;
 	
 	public DedicatedSentence() {
 	}
@@ -59,9 +61,6 @@ public class DedicatedSentence implements Serializable {
 	}
 
 
-	
-	
-	
 	public Long getIdUserOne() {
 		return idUserOne;
 	}
@@ -89,6 +88,16 @@ public class DedicatedSentence implements Serializable {
 
 	public void setIdSentence(Long idSentence) {
 		this.idSentence = idSentence;
+	}
+
+
+	public String getSentenceText() {
+		return sentenceText;
+	}
+
+
+	public void setSentenceText(String sentenceText) {
+		this.sentenceText = sentenceText;
 	}
 
 

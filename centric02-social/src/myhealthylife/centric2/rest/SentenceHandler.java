@@ -58,6 +58,7 @@ public class SentenceHandler {
 		dedicatedS.setIdUserOne(user1.getIdPerson());
 		dedicatedS.setIdUserTwo(user2.getIdPerson());
 		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
+		dedicatedS.setSentenceText(sentenceToDedicate.getText());
 		
 		// Saves the entity into the database
 		DedicatedSentence.saveDedicatedSentence(dedicatedS);
