@@ -33,4 +33,21 @@ public class FoodHandler {
 		
 	}
 	
+	
+	@Path("/all")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getAllFoods(){
+
+		Foods fs = ServicesLocator.getFoodServiceConnection();
+		
+		// Gets the foods to return (all the foods present in the database)
+        FoodList foodListToReturn = fs.readFoodList();
+        
+        // Returns the list of foods
+		return Utilities.throwOK(foodListToReturn);
+		
+	}
+	
 }
