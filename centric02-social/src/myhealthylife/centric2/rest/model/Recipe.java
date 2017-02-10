@@ -164,4 +164,19 @@ public class Recipe {
         CentricServiceDao.instance.closeConnections(em);
         return p;
     }
+    
+    public static void removeRecipe(long id) {
+    	Recipe p=getRecipeById(id);
+    	
+    	if(p==null)
+    		return;
+    	
+        EntityManager em = CentricServiceDao.instance.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        p=em.merge(p);
+        em.remove(p);
+        tx.commit();
+        CentricServiceDao.instance.closeConnections(em);
+    }
 }

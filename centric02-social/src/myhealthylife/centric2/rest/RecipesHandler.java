@@ -3,10 +3,12 @@ package myhealthylife.centric2.rest;
 import java.util.Iterator;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,7 +32,7 @@ public class RecipesHandler {
 			it.next().computeFoods();
 		}
 		
-		
+		//TODO calories
 		
 		return rl;
 	}
@@ -65,6 +67,27 @@ public class RecipesHandler {
 		
 		return Utilities.throwOK(stored);
 		
+	}
+	
+	@DELETE
+	@Path("/{recipeId}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response deleteRecipe(@PathParam("recipeId") String recipeId){
+		
+		long id;
+		try{
+			id=Long.parseLong(recipeId,10);
+		}
+		catch (Exception e) {
+			return Utilities.throwBadRequest();
+		}
+		
+		if(Recipe.getRecipeById(id)==null)
+			return Utilities.throwResourceNotFound();
+		
+		Recipe.removeRecipe(id);
+		return Utilities.throwOK(new Long(recipeId));
 	}
 
 }
