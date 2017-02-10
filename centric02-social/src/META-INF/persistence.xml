@@ -9,7 +9,7 @@
             <!-- connecting to an postgress database-->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
-      		<property name="javax.persistence.jdbc.password" value="toor" />
+      		<property name="javax.persistence.jdbc.password" value="password" />
             <!--connection url for the db-->
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/DB_centric02" />
             <!-- set it to ALL to see all the JPA related debugging information --> 

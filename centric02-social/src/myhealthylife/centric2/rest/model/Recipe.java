@@ -44,6 +44,9 @@ public class Recipe {
 	 */
 	@Transient
 	private List<Food> ingredients;
+	
+	@Transient
+	private long calories;
 
 	public long getRecipeId() {
 		return recipeId;
@@ -164,4 +167,38 @@ public class Recipe {
         CentricServiceDao.instance.closeConnections(em);
         return p;
     }
+    
+    public static void removeRecipe(long id) {
+    	Recipe p=getRecipeById(id);
+    	
+    	if(p==null)
+    		return;
+    	
+        EntityManager em = CentricServiceDao.instance.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        p=em.merge(p);
+        em.remove(p);
+        tx.commit();
+        CentricServiceDao.instance.closeConnections(em);
+    }
+
+	public long getCalories() {
+		return calories;
+	}
+
+	public void setCalories(long calories) {
+		this.calories = calories;
+	}
+	
+	public void computeCalories(){
+		calories=0;
+		Iterator<Food> iterator=getIngredients().iterator();
+		
+		while(iterator.hasNext()){
+			Food f=iterator.next();
+			if(f.getCalories()!=null)
+				calories+=f.getCalories();
+		}
+	}
 }
