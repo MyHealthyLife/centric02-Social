@@ -29,7 +29,9 @@ public class RecipesHandler {
 		Iterator<Recipe> it=rl.getRecipes().iterator();
 		
 		while(it.hasNext()){
-			it.next().computeFoods();
+			Recipe r=it.next();
+			r.computeFoods();
+			r.computeCalories();
 		}
 		
 		//TODO calories
@@ -44,6 +46,7 @@ public class RecipesHandler {
 		r.computeIDS();
 		r=Recipe.saveRecipe(r);
 		r.computeFoods();
+		r.computeCalories();
 		return r;
 	}
 	
@@ -64,6 +67,7 @@ public class RecipesHandler {
 		
 		stored=Recipe.updateRecipe(stored);
 		stored.computeFoods();
+		stored.computeCalories();
 		
 		return Utilities.throwOK(stored);
 		
