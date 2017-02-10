@@ -3,7 +3,10 @@ package myhealthylife.centric2.rest;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +61,7 @@ public class RankingHandler {
 		List<Person> personList = ds.listPeople().getPerson();
 		
 		// The set with the assigned points for each user
-		Map<String,Double> usersAndSteps = new HashMap<String,Double>();
+		Map<String,Double> usersAndPoints = new HashMap<String,Double>();
 		
 		
 		// For all the people in the database
@@ -83,14 +86,14 @@ public class RankingHandler {
 					if(singleMeasure.getMeasureType().equals("steps")) {
 						
 						// Check if we do not have a record for that user
-						if(usersAndSteps.get(singlePerson.getUsername())==null) {
-							usersAndSteps.put(singlePerson.getUsername(), singleMeasure.getMeasureValue() * this.STEPS_POINTS);
+						if(usersAndPoints.get(singlePerson.getUsername())==null) {
+							usersAndPoints.put(singlePerson.getUsername(), singleMeasure.getMeasureValue() * this.STEPS_POINTS);
 						}
 						
 						// Otherwise we just have to update the existing one
 						else {
-							Double previousValue = usersAndSteps.get(singlePerson.getUsername());
-							usersAndSteps.put(singlePerson.getUsername(), previousValue += (singleMeasure.getMeasureValue() * this.STEPS_POINTS));
+							Double previousValue = usersAndPoints.get(singlePerson.getUsername());
+							usersAndPoints.put(singlePerson.getUsername(), previousValue += (singleMeasure.getMeasureValue() * this.STEPS_POINTS));
 						}
 					}
 					
@@ -135,20 +138,19 @@ public class RankingHandler {
 								}
 								
 								// Add or update the points
-								if(usersAndSteps.get(singlePerson.getUsername())==null) {
-									usersAndSteps.put(singlePerson.getUsername(), pointsToAssign);
+								if(usersAndPoints.get(singlePerson.getUsername())==null) {
+									usersAndPoints.put(singlePerson.getUsername(), pointsToAssign);
 								}
 								
 								else {
 									System.out.println("Added +" + singleMeasure.getMeasureValue());
-									Double previousValue = usersAndSteps.get(singlePerson.getUsername());
-									usersAndSteps.put(singlePerson.getUsername(), previousValue += (pointsToAssign));
+									Double previousValue = usersAndPoints.get(singlePerson.getUsername());
+									usersAndPoints.put(singlePerson.getUsername(), previousValue += (pointsToAssign));
 								}
 								
 							}
 							
 						}
-						
 						
 					}
 					
@@ -156,12 +158,45 @@ public class RankingHandler {
 				
 			}
 			
-			
 		}
 		
-        // Returns
-		return Utilities.throwOK(usersAndSteps);
+		Map<String, Double> usersAndPointsSorted = this.sortByValue(usersAndPoints);
+		
+        // Returns the whole ranking
+		return Utilities.throwOK(usersAndPointsSorted);
 		
 	}
+	
+	
+	
+	
+	
+	private Map<String, Double> sortByValue(Map<String, Double> unsortMap) {
+
+        // Convert Map to List of Map
+        List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(unsortMap.entrySet());
+
+        // Sort list with Collections.sort(), provide a custom Comparator
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        // Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+        Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
+        for (Map.Entry<String, Double> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        
+        return sortedMap;
+    }
+
+    public static <K, V> void printMap(Map<K, V> map) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+        }
+    }
+	
 	
 }
