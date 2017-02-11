@@ -65,6 +65,23 @@ public class RecipesHandler {
 		return Utilities.throwOK(r);
 	}
 	
+	@GET
+	@Path("/name/{recipeName}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public RecipeList searchRecipesByName(@PathParam("recipeName") String recipeName){
+		RecipeList rl=new RecipeList();
+		
+		rl.setRecipes(Recipe.getRecipesByName(recipeName));
+		
+		for (int i=0;i<rl.getRecipes().size();i++){
+			rl.getRecipes().get(i).computeFoods();
+			rl.getRecipes().get(i).computeCalories();
+		}
+		
+		return rl;
+	}
+	
 	
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})

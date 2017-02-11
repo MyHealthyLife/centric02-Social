@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.TypedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -59,11 +60,14 @@ public class Recipe {
 	@XmlTransient
 	public List<Long> getIngredientsIDs() {
 		
-		/*only the ids will be saved in the DB, calculate the id when someone asking for it*/
+		/**/
 		//computeIDS();
 		return ingredientsIDs;
 	}
 
+	/**
+	 * only the ids will be saved in the DB, calculate the id when someone asking for it
+	 */
 	public void computeIDS() {
 		ingredientsIDs=new ArrayList<Long>();
 		
@@ -98,9 +102,28 @@ public class Recipe {
 		this.description = description;
 	}
 	
+	/**
+	 * returns all recipes
+	 * @return
+	 */
 	public static List<Recipe> getAll(){
 		EntityManager em=CentricServiceDao.instance.createEntityManager();
 		List<Recipe> list=em.createNamedQuery("Recipe.findAll", Recipe.class).getResultList();
+		CentricServiceDao.instance.closeConnections(em);
+		return list;
+	}
+	
+	/**
+	 * return a list of recipe filtered by name
+	 * @param name
+	 * @return
+	 */
+	public static List<Recipe> getRecipesByName(String name){
+		EntityManager em=CentricServiceDao.instance.createEntityManager();
+		/*LOWER for ingoring the difference due to the UPPERCASE*/
+		TypedQuery<Recipe> query=em.createQuery("Select r FROM Recipe r WHERE LOWER(r.name) LIKE LOWER(?1)", Recipe.class);
+		query.setParameter(1, name);
+		List<Recipe> list=query.getResultList();
 		CentricServiceDao.instance.closeConnections(em);
 		return list;
 	}
@@ -108,14 +131,15 @@ public class Recipe {
 	@Transient
 	public List<Food> getIngredients() {
 		
-		/* when someone asking for the ingredients list centric02 retrieves the list 
-		 * the food date from the service03 based on the ids */
-		
 		//computeFoods();
 		
 		return ingredients;
 	}
 
+	/** when someone asking for the ingredients list, centric02 retrieves the list 
+	 * the food date from the service03 based on the ids 
+	 * 
+	 */
 	public void computeFoods() {
 		ingredients=new ArrayList<Food>();
 		
