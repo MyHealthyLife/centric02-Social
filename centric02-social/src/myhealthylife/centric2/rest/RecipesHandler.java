@@ -50,6 +50,22 @@ public class RecipesHandler {
 		return rl;
 	}
 	
+	@GET
+	@Path("/id/{recipeID}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getRecipeById(@PathParam("recipeID") Long recipeID){
+		Recipe r=Recipe.getRecipeById(recipeID);
+		if(r==null)
+			return Utilities.throwResourceNotFound();
+		
+		r.computeFoods();
+		r.computeCalories();
+		
+		return Utilities.throwOK(r);
+	}
+	
+	
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
