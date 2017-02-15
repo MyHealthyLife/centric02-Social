@@ -5,3 +5,4 @@ ivy/
 build_ant/
 centric01-main.war
 /bin/
+/target/
