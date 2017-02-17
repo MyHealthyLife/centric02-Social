@@ -19,6 +19,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import myhealthylife.centric2.rest.model.Rank;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
 import myhealthylife.dataservice.soap.DataService;
@@ -162,8 +163,11 @@ public class RankingHandler {
 		
 		Map<String, Double> usersAndPointsSorted = this.sortByValue(usersAndPoints);
 		
+		Rank rankObj = new Rank();
+		rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
+		
         // Returns the whole ranking
-		return Utilities.throwOK(usersAndPointsSorted);
+		return Utilities.throwOK(rankObj);
 		
 	}
 	
