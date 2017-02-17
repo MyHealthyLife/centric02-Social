@@ -182,6 +182,9 @@ public class RankingHandler {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
+        
+        // Reverse the list so we have the DESC order
+        Collections.reverse(list);
 
         // Loop the sorted list and put it into a new insertion order Map LinkedHashMap
         Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
