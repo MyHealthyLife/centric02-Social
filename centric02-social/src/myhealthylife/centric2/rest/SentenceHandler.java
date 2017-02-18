@@ -57,6 +57,8 @@ public class SentenceHandler {
 		// Fills the entity with some data
 		dedicatedS.setIdUserOne(user1.getIdPerson());
 		dedicatedS.setIdUserTwo(user2.getIdPerson());
+		dedicatedS.setUsernameOne(user1.getUsername());
+		dedicatedS.setUsernameTwo(user2.getUsername());
 		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
 		dedicatedS.setSentenceText(sentenceToDedicate.getText());
 		

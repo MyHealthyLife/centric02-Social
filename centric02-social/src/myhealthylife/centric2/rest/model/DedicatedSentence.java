@@ -25,7 +25,7 @@ import myhealthylife.centric2.dao.CentricServiceDao;
 @Table(name="DedicatedSentence")
 @NamedQuery(name="DedicatedSentence.findAll", query="SELECT d FROM DedicatedSentence d")
 @XmlRootElement(name="dedicatedSentence")
-@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "idSentence", "sentenceText"})
+@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "usernameOne", "usernameTwo", "idSentence", "sentenceText"})
 public class DedicatedSentence implements Serializable {
 
 
@@ -35,12 +35,18 @@ public class DedicatedSentence implements Serializable {
 	@GeneratedValue
 	private long idDedicatedSentence;
 
-	@Column(name="userone")
+	@Column(name="userOne")
 	private Long idUserOne;
 	
-	@Column(name="usertwo")
+	@Column(name="userTwo")
 	private Long idUserTwo;
 
+	@Column(name="usernameOne")
+	private String usernameOne;
+
+	@Column(name="usernameTwo")
+	private String usernameTwo;
+	
 	@Column(name="idSentence")
 	private Long idSentence;
 	
@@ -78,6 +84,26 @@ public class DedicatedSentence implements Serializable {
 
 	public void setIdUserTwo(Long idUserTwo) {
 		this.idUserTwo = idUserTwo;
+	}
+
+
+	public String getUsernameOne() {
+		return usernameOne;
+	}
+
+
+	public void setUsernameOne(String usernameOne) {
+		this.usernameOne = usernameOne;
+	}
+
+
+	public String getUsernameTwo() {
+		return usernameTwo;
+	}
+
+
+	public void setUsernameTwo(String usernameTwo) {
+		this.usernameTwo = usernameTwo;
 	}
 
 
