@@ -22,6 +22,11 @@ public class Rank {
 	}
 	
 	
+	/**
+	 * Formats the input ranking list containing all the users in the system
+	 * @param sortedRanking The ranking list in an hashmap object
+	 * @return The same ranking formatted as a list of strings containing also the position for each entry
+	 */
 	public ArrayList<String> getFinalRanking(Map<String, Double> sortedRanking) {
 
 		Iterator<String> iKeys = sortedRanking.keySet().iterator();
@@ -42,7 +47,12 @@ public class Rank {
 	}
 	
 	
-	
+	/**
+	 * Formats the input ranking list containing all the users in the system in a list of results strictly close to the current user
+	 * @param username The user around which the list will be built in order to filter the results
+	 * @param sortedRanking The ranking list in an hashmap object
+	 * @return A subset of the ranking formatted as a list of strings containing also the position for each entry
+	 */
 	public ArrayList<String> getFinalRankingFiltered(String username, Map<String, Double> sortedRanking) {
 
 		this.compactRanking = new ArrayList<>();
