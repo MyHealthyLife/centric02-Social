@@ -52,9 +52,6 @@ public class RankingHandler {
 		DataService ds = ServicesLocator.getDataServiceConnection();
 		OptimalParameters gs = ServicesLocator.getOptimalParameterConnection();
 		
-		// Gets the user from service 1
-		Person user = ds.getPersonByUsername(username);
-		
 		// Gets the global optimal parameters
 		List<Parameter> pl = gs.readOptimalParameters().getParameters();
 		
@@ -96,14 +93,11 @@ public class RankingHandler {
 							Double previousValue = usersAndPoints.get(singlePerson.getUsername());
 							usersAndPoints.put(singlePerson.getUsername(), previousValue += (singleMeasure.getMeasureValue() * this.STEPS_POINTS));
 						}
+						
 					}
-					
-					
-					
-					
+
 				}
-				
-				
+
 			}
 			
 			
@@ -116,11 +110,11 @@ public class RankingHandler {
 				for(int j=0;j<measureSP.size();j++) {
 					
 					Measure singleMeasure = measureSP.get(j);
-
 					
 					// Assigns points for "weight" measure
 					if(singleMeasure.getMeasureType().equals("weight")) {
 	
+						// Calculates the age of the person
 						int personAge = yearToday - singlePerson.getBirthdate().getYear();
 						
 						
@@ -129,8 +123,10 @@ public class RankingHandler {
 							Parameter singleParameter = pl.get(k);
 							AgeRange spAgeRange = singleParameter.getAgeRange();
 							
+							// Checks if the person is in the considered age range and other parameters
 							if(spAgeRange.getFromAge() < personAge && personAge < spAgeRange.getToAge() && singleParameter.getSex().equals(singlePerson.getSex()) && singleParameter.getParameterName().equals("weight")) {
 								
+								// Assigns points for the weight
 								Double pointsToAssign = this.WEIGHT_DISTANCE_POINTS_MAX - (Math.abs(singleParameter.getValue() - singleMeasure.getMeasureValue()) * this.WEIGHT_DISTANCE_MULFACTOR);
 								
 								// The minimum points to assign is one
@@ -144,7 +140,6 @@ public class RankingHandler {
 								}
 								
 								else {
-									System.out.println("Added +" + singleMeasure.getMeasureValue());
 									Double previousValue = usersAndPoints.get(singlePerson.getUsername());
 									usersAndPoints.put(singlePerson.getUsername(), previousValue += (pointsToAssign));
 								}
@@ -161,12 +156,14 @@ public class RankingHandler {
 			
 		}
 		
+		// Sorts the hashmap by its values
 		Map<String, Double> usersAndPointsSorted = this.sortByValue(usersAndPoints);
 		
+		// Builds a Rank object and calculates a filtered ranking based on the position of the user
 		Rank rankObj = new Rank();
 		rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
 		
-        // Returns the whole ranking
+        // Returns the filtered ranking
 		return Utilities.throwOK(rankObj);
 		
 	}
@@ -174,7 +171,11 @@ public class RankingHandler {
 	
 	
 	
-	
+	/**
+	 * Sorts a map object by its values
+	 * @param unsortMap The map which has a random order
+	 * @return An ordered Map<String, Double> by its values 
+	 */
 	private Map<String, Double> sortByValue(Map<String, Double> unsortMap) {
 
         // Convert Map to List of Map
