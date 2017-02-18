@@ -112,7 +112,7 @@ public class RankingHandler {
 					Measure singleMeasure = measureSP.get(j);
 					
 					// Assigns points for "weight" measure
-					if(singleMeasure.getMeasureType().equals("weight")) {
+					if(singleMeasure.getMeasureType().equals("weight") && singlePerson.getBirthdate()!=null) {
 	
 						// Calculates the age of the person
 						int personAge = yearToday - singlePerson.getBirthdate().getYear();
