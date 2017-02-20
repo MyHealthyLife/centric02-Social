@@ -1,8 +1,10 @@
 package myhealthylife.centric2.rest.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import myhealthylife.centric2.dao.CentricServiceDao;
@@ -25,7 +30,7 @@ import myhealthylife.centric2.dao.CentricServiceDao;
 @Table(name="DedicatedSentence")
 @NamedQuery(name="DedicatedSentence.findAll", query="SELECT d FROM DedicatedSentence d")
 @XmlRootElement(name="dedicatedSentence")
-@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "usernameOne", "usernameTwo", "idSentence", "sentenceText"})
+@XmlType(propOrder={"idDedicatedSentence", "idUserOne", "idUserTwo", "usernameOne", "usernameTwo", "idSentence", "sentenceText", "insertionTime"})
 public class DedicatedSentence implements Serializable {
 
 
@@ -52,6 +57,11 @@ public class DedicatedSentence implements Serializable {
 	
 	@Column(name="sentencetext")
 	private String sentenceText;
+
+	@Basic(optional = false)
+	@Temporal(TemporalType.DATE)
+	@Column(name="insertionTime", insertable = true, updatable = false)
+	private Date insertionTime;
 	
 	public DedicatedSentence() {
 	}
@@ -124,6 +134,16 @@ public class DedicatedSentence implements Serializable {
 
 	public void setSentenceText(String sentenceText) {
 		this.sentenceText = sentenceText;
+	}
+
+
+	public Date getInsertionTime() {
+		return insertionTime;
+	}
+
+
+	public void setInsertionTime(Date insertionTime) {
+		this.insertionTime = insertionTime;
 	}
 
 

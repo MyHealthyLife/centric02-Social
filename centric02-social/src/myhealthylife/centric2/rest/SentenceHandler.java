@@ -1,7 +1,11 @@
 package myhealthylife.centric2.rest;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -61,6 +65,7 @@ public class SentenceHandler {
 		dedicatedS.setUsernameTwo(user2.getUsername());
 		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
 		dedicatedS.setSentenceText(sentenceToDedicate.getText());
+		dedicatedS.setInsertionTime(new Date(System.currentTimeMillis()));
 		
 		// Saves the entity into the database
 		DedicatedSentence.saveDedicatedSentence(dedicatedS);
@@ -119,6 +124,7 @@ public class SentenceHandler {
 		dedicatedS.setUsernameTwo(user2.getUsername());
 		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
 		dedicatedS.setSentenceText(sentenceToDedicate.getText());
+		dedicatedS.setInsertionTime(new Date(System.currentTimeMillis()));
 		
 		// Saves the entity into the database
 		DedicatedSentence.saveDedicatedSentence(dedicatedS);
