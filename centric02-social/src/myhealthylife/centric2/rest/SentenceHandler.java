@@ -72,6 +72,64 @@ public class SentenceHandler {
 	
 	
 	
+	@Path("/{username1}/{username2}/{type}/{motive}")
+	@POST
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response dedicateSentenceToUserByType(@PathParam("username1") String username1, @PathParam("username2") String username2, @PathParam("type") String sentenceType, @PathParam("motive") String motive){
+
+		DataService ds = ServicesLocator.getDataServiceConnection();
+		Sentences ss = ServicesLocator.getSentenceGeneratorConnection();
+		
+		// Gets the first and the second user
+		Person user1 = ds.getPersonByUsername(username1);
+		Person user2 = ds.getPersonByUsername(username2);
+		
+		Boolean motiveToSet = false;
+		
+		// Sets the motive parameter
+		if(motive.equals("gain")) {
+			motiveToSet = true;
+		}
+		else if(motive.equals("loss")) {
+			motiveToSet = false;
+		}
+		else {
+
+			return Utilities.throwNoContent();
+			
+		}
+		
+		// Gets the sentences to dedicate
+		Sentence sentenceToDedicate = ss.readRandomSentenceByTypeAndTrend(sentenceType, motiveToSet);
+		
+		// Checks if all three entities exist
+		if(user1==null && user2==null && sentenceToDedicate==null) {
+			
+			return Utilities.throwResourceNotFound();
+			
+		}
+		
+		DedicatedSentence dedicatedS = new DedicatedSentence();
+
+		// Fills the entity with some data
+		dedicatedS.setIdUserOne(user1.getIdPerson());
+		dedicatedS.setIdUserTwo(user2.getIdPerson());
+		dedicatedS.setUsernameOne(user1.getUsername());
+		dedicatedS.setUsernameTwo(user2.getUsername());
+		dedicatedS.setIdSentence(sentenceToDedicate.getIdSentence());
+		dedicatedS.setSentenceText(sentenceToDedicate.getText());
+		
+		// Saves the entity into the database
+		DedicatedSentence.saveDedicatedSentence(dedicatedS);
+        
+        // Returns the dedicated sentence
+		return Utilities.throwOK(dedicatedS);
+		
+	}
+	
+	
+	
 	@Path("/{username}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
