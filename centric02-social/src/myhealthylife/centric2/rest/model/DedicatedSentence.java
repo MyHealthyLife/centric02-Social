@@ -60,7 +60,7 @@ public class DedicatedSentence implements Serializable {
 
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
-	@Column(name="insertionTime", insertable = true, updatable = false)
+	@Column(name="insertionTime", insertable = true, updatable = true)
 	private Date insertionTime;
 	
 	public DedicatedSentence() {

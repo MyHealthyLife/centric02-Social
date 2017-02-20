@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -166,7 +167,20 @@ public class SentenceHandler {
 			// Checks if the second user id is equal to the user
 			if(currentDS.getIdUserTwo()==user.getIdPerson()) {
 				
-				dedicatedSListForUser.add(currentDS);
+				if(currentDS.getInsertionTime()!=null) {
+
+					Calendar calDS = Calendar.getInstance();
+					calDS.setTime(currentDS.getInsertionTime());
+					
+					Calendar calWeekEarly = Calendar.getInstance();
+					calWeekEarly.add(Calendar.DATE, -7);
+
+					if(calDS.getTime().getTime() > calWeekEarly.getTime().getTime()) {
+					
+						dedicatedSListForUser.add(currentDS);
+					
+					}
+				}
 				
 			}
 		}
