@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import myhealthylife.centric2.dao.CentricServiceDao;
 
 
@@ -61,6 +63,7 @@ public class DedicatedSentence implements Serializable {
 	@Basic(optional = false)
 	@Temporal(TemporalType.DATE)
 	@Column(name="insertionTime", insertable = true, updatable = true)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date insertionTime;
 	
 	public DedicatedSentence() {
