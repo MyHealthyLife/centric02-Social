@@ -13,5 +13,7 @@ public void filter(ContainerRequestContext requestContext,   ContainerResponseCo
     throws IOException {
         responseContext.getHeaders().add("Access-Control-Allow-Origin","*");
         responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
+        responseContext.getHeaders().add("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        
   }
 }
