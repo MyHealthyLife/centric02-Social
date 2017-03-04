@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import myhealthylife.centric2.rest.model.PersonRank;
 import myhealthylife.centric2.rest.model.Rank;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
@@ -45,7 +47,7 @@ public class RankingHandler {
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Response getUserRank(@PathParam("username") String username){
+	public Response getUserRank(@PathParam("username") String username, @QueryParam("bot") Boolean botSchema){
 
 		int yearToday = Calendar.getInstance().get(Calendar.YEAR);
 		
@@ -158,17 +160,72 @@ public class RankingHandler {
 		
 		// Sorts the hashmap by its values
 		Map<String, Double> usersAndPointsSorted = this.sortByValue(usersAndPoints);
+
+		if(botSchema) {
+		
+			// Builds a Rank object and calculates a filtered ranking based on the position of the user
+			Rank rankObj = new Rank();
+			rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
+		
+	        // Returns the filtered ranking
+			return Utilities.throwOK(rankObj);
+		}
+		
 		
 		// Builds a Rank object and calculates a filtered ranking based on the position of the user
 		Rank rankObj = new Rank();
-		rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
+		List<PersonRank> detailedList = this.getDetailedList(personList, rankObj.getFinalRankingMapFiltered(username, usersAndPointsSorted));
 		
-        // Returns the filtered ranking
-		return Utilities.throwOK(rankObj);
-		
+		return Utilities.throwOK(detailedList);
 	}
 	
 	
+	
+	private List<PersonRank> getDetailedList(List<Person> personList, Map<String,Double> compactMap) {
+		
+		List<PersonRank> pRankList = new ArrayList<PersonRank>();
+		
+		List<String> usernamesAlreadyAdded = new ArrayList<>();
+
+		Iterator<String> iKeys = compactMap.keySet().iterator();
+		
+		for(int i=0;i<compactMap.size();i++) {
+			
+			String currentKey = iKeys.next();
+			Double currentValue = compactMap.get(currentKey);
+			
+			System.out.println("Current key: " + currentKey + ", currentValue: " + currentValue);
+			
+			for(int j=0;j<personList.size();j++) {
+				
+				Person singlePerson = personList.get(j);
+
+				System.out.println("Current person: " + singlePerson.getUsername());
+				
+				if(!usernamesAlreadyAdded.contains(singlePerson.getUsername()) && singlePerson.getUsername().equals(currentKey)) {
+					
+					PersonRank singlePersonRank = new PersonRank();
+					singlePersonRank.setIdPerson(singlePerson.getIdPerson());
+					singlePersonRank.setFirstname(singlePerson.getFirstname());
+					singlePersonRank.setLastname(singlePerson.getLastname());
+					singlePersonRank.setUsername(singlePerson.getUsername());
+					singlePersonRank.setSex(singlePerson.getSex());
+					singlePersonRank.setPoints(currentValue);
+					
+					pRankList.add(singlePersonRank);
+					
+					usernamesAlreadyAdded.add(singlePerson.getUsername());
+					System.out.println("ADDED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					
+				}
+				
+			}
+			
+		}
+		System.out.println("Compact: " + compactMap.size() + ", resultList: " + pRankList.size());
+		return pRankList;
+		
+	}
 	
 	
 	/**
