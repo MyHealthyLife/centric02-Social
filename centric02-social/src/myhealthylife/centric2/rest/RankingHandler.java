@@ -180,7 +180,12 @@ public class RankingHandler {
 	}
 	
 	
-	
+	/**
+	 * Generates a filtered list of PersonRank objects based on the ranking generated previously
+	 * @param personList The whole list of people
+	 * @param compactMap The Map object containing the filtered ranking results
+	 * @return A list of PersonRank objects representing a more detailed ranking result
+	 */
 	private List<PersonRank> getDetailedList(List<Person> personList, Map<String,Double> compactMap) {
 		
 		List<PersonRank> pRankList = new ArrayList<PersonRank>();
@@ -194,13 +199,9 @@ public class RankingHandler {
 			String currentKey = iKeys.next();
 			Double currentValue = compactMap.get(currentKey);
 			
-			System.out.println("Current key: " + currentKey + ", currentValue: " + currentValue);
-			
 			for(int j=0;j<personList.size();j++) {
 				
 				Person singlePerson = personList.get(j);
-
-				System.out.println("Current person: " + singlePerson.getUsername());
 				
 				if(!usernamesAlreadyAdded.contains(singlePerson.getUsername()) && singlePerson.getUsername().equals(currentKey)) {
 					
@@ -215,14 +216,13 @@ public class RankingHandler {
 					pRankList.add(singlePersonRank);
 					
 					usernamesAlreadyAdded.add(singlePerson.getUsername());
-					System.out.println("ADDED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					
 				}
 				
 			}
 			
 		}
-		System.out.println("Compact: " + compactMap.size() + ", resultList: " + pRankList.size());
+		
 		return pRankList;
 		
 	}
