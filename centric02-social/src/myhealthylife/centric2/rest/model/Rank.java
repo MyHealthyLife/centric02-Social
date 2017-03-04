@@ -1,7 +1,9 @@
 package myhealthylife.centric2.rest.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -94,6 +96,63 @@ public class Rank {
 		}
 		
 		return new ArrayList<>(compactRanking.subList(lowerElement, upperElement));
+	}
+	
+	
+	
+	
+	
+	public Map<String,Double> getFinalRankingMapFiltered(String username, Map<String, Double> sortedRanking) {
+
+		Map<String,Double> compactMap = new LinkedHashMap<String,Double>();
+		
+		ArrayList<String> usernames = new ArrayList<>();
+		ArrayList<Double> points = new ArrayList<>();
+		
+		Iterator<String> iKeys = sortedRanking.keySet().iterator();
+		
+		boolean elementFound = false;
+		int elementCounter = 0;
+		int upperBound = sortedRanking.size();
+		
+		for(int i=0;i<upperBound;i++) {
+			
+			String currentKey = iKeys.next();
+			Double currentValue = sortedRanking.get(currentKey);
+			
+			usernames.add(currentKey);
+			points.add(currentValue);
+			
+			if(!elementFound && currentKey.equals(username)) {
+				elementFound = true;
+				elementCounter = i;
+			}
+			
+		}
+		
+		Integer lowerElement = elementCounter - this.NUM_ELEMENTS_FILTERED_LIST/2;
+		Integer upperElement = elementCounter + this.NUM_ELEMENTS_FILTERED_LIST/2;
+		
+		// Check the bounds
+		if(lowerElement < 0) {
+			lowerElement = 0;
+		}
+		if(upperElement >= upperBound) {
+			upperElement = upperBound;
+		}
+		else {
+			upperElement +=1;
+		}
+		
+		usernames = new ArrayList<>(usernames.subList(lowerElement, upperElement));
+		points = new ArrayList<>(points.subList(lowerElement, upperElement));
+		
+		
+		for(int i=0;i<usernames.size();i++) {
+			compactMap.put(usernames.get(i), points.get(i));
+		}
+		
+		return compactMap;
 	}
 	
 }
