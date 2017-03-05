@@ -13,6 +13,8 @@ public class PersonRank {
 	private String firstname;
     private String lastname;
     private String sex;
+    private Double weight;
+    private Double steps;
     private Double points;
     
     
@@ -45,6 +47,18 @@ public class PersonRank {
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+	public Double getSteps() {
+		return steps;
+	}
+	public void setSteps(Double steps) {
+		this.steps = steps;
 	}
 	public Double getPoints() {
 		return points;

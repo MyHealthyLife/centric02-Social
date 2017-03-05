@@ -213,6 +213,29 @@ public class RankingHandler {
 					singlePersonRank.setSex(singlePerson.getSex());
 					singlePersonRank.setPoints(currentValue);
 					
+					
+					HealthProfile spHp = singlePerson.getHealthProfile();
+					
+					if(spHp!=null) {
+						
+						List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasure();
+						
+						// Checks the "weight" and "steps" measure in order to add the current values to the person rank
+						for(int k=0;k<measureSP.size();k++) {
+							
+							Measure singleMeasure = measureSP.get(k);
+							
+							// Assigns points for "weight" measure
+							if(singleMeasure.getMeasureType().equals("weight")) {
+								singlePersonRank.setWeight(singleMeasure.getMeasureValue());
+							}
+							
+							if(singleMeasure.getMeasureType().equals("steps")) {
+								singlePersonRank.setSteps(singleMeasure.getMeasureValue());
+							}
+						}
+					}
+					
 					pRankList.add(singlePersonRank);
 					
 					usernamesAlreadyAdded.add(singlePerson.getUsername());
