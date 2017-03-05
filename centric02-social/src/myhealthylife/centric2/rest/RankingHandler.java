@@ -236,6 +236,13 @@ public class RankingHandler {
 						}
 					}
 					
+					if(singlePerson.getTelegramUsername()!=null && singlePerson.getTelegramID()!=null) {
+						singlePersonRank.setTelegramUsernameAvailable(true);
+					}
+					else {
+						singlePersonRank.setTelegramUsernameAvailable(false);
+					}
+					
 					pRankList.add(singlePersonRank);
 					
 					usernamesAlreadyAdded.add(singlePerson.getUsername());

@@ -16,6 +16,7 @@ public class PersonRank {
     private Double weight;
     private Double steps;
     private Double points;
+    private Boolean telegramUsernameAvailable;
     
     
 	public long getIdPerson() {
@@ -65,6 +66,12 @@ public class PersonRank {
 	}
 	public void setPoints(Double points) {
 		this.points = points;
+	}
+	public Boolean getTelegramUsernameAvailable() {
+		return telegramUsernameAvailable;
+	}
+	public void setTelegramUsernameAvailable(Boolean telegramUsernameAvailable) {
+		this.telegramUsernameAvailable = telegramUsernameAvailable;
 	}
 	
 }
