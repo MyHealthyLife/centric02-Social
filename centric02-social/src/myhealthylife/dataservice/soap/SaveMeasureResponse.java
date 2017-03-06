@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for saveMeasureResponse complex type.
+ * <p>Classe Java per saveMeasureResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="saveMeasureResponse">
@@ -34,7 +34,7 @@ public class SaveMeasureResponse {
     protected Measure measure;
 
     /**
-     * Gets the value of the measure property.
+     * Recupera il valore della proprietà measure.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class SaveMeasureResponse {
     }
 
     /**
-     * Sets the value of the measure property.
+     * Imposta il valore della proprietà measure.
      * 
      * @param value
      *     allowed object is

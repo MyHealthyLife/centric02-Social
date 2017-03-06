@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getMeasureHistory complex type.
+ * <p>Classe Java per getMeasureHistory complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="getMeasureHistory">
@@ -34,7 +34,7 @@ public class GetMeasureHistory {
     protected long arg0;
 
     /**
-     * Gets the value of the arg0 property.
+     * Recupera il valore della proprietà arg0.
      * 
      */
     public long getArg0() {
@@ -42,7 +42,7 @@ public class GetMeasureHistory {
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Imposta il valore della proprietà arg0.
      * 
      */
     public void setArg0(long value) {

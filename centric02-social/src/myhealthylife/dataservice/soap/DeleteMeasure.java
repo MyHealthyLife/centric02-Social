@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for deleteMeasure complex type.
+ * <p>Classe Java per deleteMeasure complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="deleteMeasure">
@@ -37,7 +37,7 @@ public class DeleteMeasure {
     protected long arg1;
 
     /**
-     * Gets the value of the arg0 property.
+     * Recupera il valore della proprietà arg0.
      * 
      */
     public long getArg0() {
@@ -45,7 +45,7 @@ public class DeleteMeasure {
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Imposta il valore della proprietà arg0.
      * 
      */
     public void setArg0(long value) {
@@ -53,7 +53,7 @@ public class DeleteMeasure {
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Recupera il valore della proprietà arg1.
      * 
      */
     public long getArg1() {
@@ -61,7 +61,7 @@ public class DeleteMeasure {
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Imposta il valore della proprietà arg1.
      * 
      */
     public void setArg1(long value) {

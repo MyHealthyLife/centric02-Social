@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for deleteMeasureResponse complex type.
+ * <p>Classe Java per deleteMeasureResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="deleteMeasureResponse">
@@ -34,7 +34,7 @@ public class DeleteMeasureResponse {
     protected long mid;
 
     /**
-     * Gets the value of the mid property.
+     * Recupera il valore della proprietà mid.
      * 
      */
     public long getMid() {
@@ -42,7 +42,7 @@ public class DeleteMeasureResponse {
     }
 
     /**
-     * Sets the value of the mid property.
+     * Imposta il valore della proprietà mid.
      * 
      */
     public void setMid(long value) {

@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getCurrentHealthResponse complex type.
+ * <p>Classe Java per getCurrentHealthResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="getCurrentHealthResponse">
@@ -34,7 +34,7 @@ public class GetCurrentHealthResponse {
     protected CurrentHealth currentHealth;
 
     /**
-     * Gets the value of the currentHealth property.
+     * Recupera il valore della proprietà currentHealth.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class GetCurrentHealthResponse {
     }
 
     /**
-     * Sets the value of the currentHealth property.
+     * Imposta il valore della proprietà currentHealth.
      * 
      * @param value
      *     allowed object is

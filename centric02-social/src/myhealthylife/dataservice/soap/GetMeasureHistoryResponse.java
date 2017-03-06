@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getMeasureHistoryResponse complex type.
+ * <p>Classe Java per getMeasureHistoryResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="getMeasureHistoryResponse">
@@ -34,7 +34,7 @@ public class GetMeasureHistoryResponse {
     protected MeasureHistory measureHistory;
 
     /**
-     * Gets the value of the measureHistory property.
+     * Recupera il valore della proprietà measureHistory.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class GetMeasureHistoryResponse {
     }
 
     /**
-     * Sets the value of the measureHistory property.
+     * Imposta il valore della proprietà measureHistory.
      * 
      * @param value
      *     allowed object is

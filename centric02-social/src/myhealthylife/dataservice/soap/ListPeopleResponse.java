@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for listPeopleResponse complex type.
+ * <p>Classe Java per listPeopleResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="listPeopleResponse">
@@ -34,7 +34,7 @@ public class ListPeopleResponse {
     protected People people;
 
     /**
-     * Gets the value of the people property.
+     * Recupera il valore della proprietà people.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class ListPeopleResponse {
     }
 
     /**
-     * Sets the value of the people property.
+     * Imposta il valore della proprietà people.
      * 
      * @param value
      *     allowed object is
