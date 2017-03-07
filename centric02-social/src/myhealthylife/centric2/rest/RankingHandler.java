@@ -238,6 +238,13 @@ public class RankingHandler {
 					
 					if(singlePerson.getTelegramUsername()!=null && singlePerson.getTelegramID()!=null) {
 						singlePersonRank.setTelegramUsernameAvailable(true);
+						if(singlePerson.isUsernameVisible()) {
+							singlePersonRank.setTelegramUsernameVisible(true);
+							singlePersonRank.setTelegramUsername(singlePerson.getTelegramUsername());
+						}
+						else {
+							singlePersonRank.setTelegramUsernameVisible(false);
+						}
 					}
 					else {
 						singlePersonRank.setTelegramUsernameAvailable(false);
