@@ -17,12 +17,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.ws.Holder;
 
 import myhealthylife.centric2.rest.model.DedicatedSentence;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
 import myhealthylife.dataservice.soap.DataService;
 import myhealthylife.dataservice.soap.Person;
+import myhealthylife.nutritionservice.soap.Food;
 import myhealthylife.nutritionservice.soap.FoodList;
 import myhealthylife.nutritionservice.soap.Foods;
 import myhealthylife.sentencegenerator.soap.Sentence;
@@ -194,6 +196,42 @@ public class SentenceHandler {
         
         // Returns the list of dedicated sentence for the user
 		return Utilities.throwOK(dedicatedSListForUser);
+		
+	}
+	
+	
+	
+	
+	
+	@Path("/")
+	@POST
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response createSentence(Sentence sentenceToSave){
+		
+		Sentences ss = ServicesLocator.getSentenceGeneratorConnection();
+		
+		// The new sentence that needs to be created
+		Sentence newSentence = new Sentence();
+		
+		// Tries to save the food passed in input
+        if(sentenceToSave.getText()!=null) {
+        	
+        	Holder<Sentence> sentenceHolder = new Holder<Sentence>(sentenceToSave);
+            ss.createSentence(sentenceHolder);
+            newSentence = sentenceHolder.value;
+        	
+        }
+		
+		// Checks the result
+        if(newSentence!=null) {
+
+    		return Utilities.throwOK(newSentence);
+    		
+        }
+        
+        // Otherwise it returns an error
+        return Utilities.throwConflict();
 		
 	}
 	
