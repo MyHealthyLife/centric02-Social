@@ -25,7 +25,6 @@ import myhealthylife.centric2.util.Utilities;
 import myhealthylife.dataservice.soap.DataService;
 import myhealthylife.dataservice.soap.Person;
 import myhealthylife.nutritionservice.soap.Food;
-import myhealthylife.nutritionservice.soap.FoodList;
 import myhealthylife.nutritionservice.soap.Foods;
 import myhealthylife.sentencegenerator.soap.Sentence;
 import myhealthylife.sentencegenerator.soap.Sentences;

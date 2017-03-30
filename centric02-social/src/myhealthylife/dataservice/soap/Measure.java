@@ -9,9 +9,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per measure complex type.
+ * <p>Java class for measure complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="measure">
@@ -46,7 +46,7 @@ public class Measure {
     protected long mid;
 
     /**
-     * Recupera il valore della proprietà dateRegistered.
+     * Gets the value of the dateRegistered property.
      * 
      * @return
      *     possible object is
@@ -58,7 +58,7 @@ public class Measure {
     }
 
     /**
-     * Imposta il valore della proprietà dateRegistered.
+     * Sets the value of the dateRegistered property.
      * 
      * @param value
      *     allowed object is
@@ -70,7 +70,7 @@ public class Measure {
     }
 
     /**
-     * Recupera il valore della proprietà measureType.
+     * Gets the value of the measureType property.
      * 
      * @return
      *     possible object is
@@ -82,7 +82,7 @@ public class Measure {
     }
 
     /**
-     * Imposta il valore della proprietà measureType.
+     * Sets the value of the measureType property.
      * 
      * @param value
      *     allowed object is
@@ -94,7 +94,7 @@ public class Measure {
     }
 
     /**
-     * Recupera il valore della proprietà measureValue.
+     * Gets the value of the measureValue property.
      * 
      * @return
      *     possible object is
@@ -106,7 +106,7 @@ public class Measure {
     }
 
     /**
-     * Imposta il valore della proprietà measureValue.
+     * Sets the value of the measureValue property.
      * 
      * @param value
      *     allowed object is
@@ -118,7 +118,7 @@ public class Measure {
     }
 
     /**
-     * Recupera il valore della proprietà mid.
+     * Gets the value of the mid property.
      * 
      */
     public long getMid() {
@@ -126,7 +126,7 @@ public class Measure {
     }
 
     /**
-     * Imposta il valore della proprietà mid.
+     * Sets the value of the mid property.
      * 
      */
     public void setMid(long value) {

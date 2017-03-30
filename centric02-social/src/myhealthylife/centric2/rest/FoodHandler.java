@@ -14,8 +14,8 @@ import javax.xml.ws.Holder;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
 import myhealthylife.nutritionservice.soap.Food;
-import myhealthylife.nutritionservice.soap.FoodList;
 import myhealthylife.nutritionservice.soap.Foods;
+import myhealthylife.nutritionservice.soap.Foods_Type;
 
 @Path("/food")
 public class FoodHandler {
@@ -29,7 +29,7 @@ public class FoodHandler {
 		Foods fs = ServicesLocator.getFoodServiceConnection();
 		
 		// Gets the foods to return
-        FoodList foodListToReturn = fs.findFoodByTypeFiltered(typeName, maxCal);
+        Foods_Type foodListToReturn = fs.findFoodByTypeFiltered(typeName, maxCal);
         
         // Returns the list of foods
 		return Utilities.throwOK(foodListToReturn);
@@ -46,7 +46,7 @@ public class FoodHandler {
 		Foods fs = ServicesLocator.getFoodServiceConnection();
 		
 		// Gets the foods to return (all the foods present in the database)
-        FoodList foodListToReturn = fs.readFoodList();
+        Foods_Type foodListToReturn = fs.readFoodList();
         
         // Returns the list of foods
 		return Utilities.throwOK(foodListToReturn);

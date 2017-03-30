@@ -3,15 +3,16 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per person complex type.
+ * <p>Java class for person complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="person">
@@ -51,6 +52,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "username",
     "usernameVisible"
 })
+@XmlRootElement(name = "person")
 public class Person {
 
     @XmlSchemaType(name = "dateTime")
@@ -67,7 +69,7 @@ public class Person {
     protected Boolean usernameVisible;
 
     /**
-     * Recupera il valore della proprietà birthdate.
+     * Gets the value of the birthdate property.
      * 
      * @return
      *     possible object is
@@ -79,7 +81,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà birthdate.
+     * Sets the value of the birthdate property.
      * 
      * @param value
      *     allowed object is
@@ -91,7 +93,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà firstname.
+     * Gets the value of the firstname property.
      * 
      * @return
      *     possible object is
@@ -103,7 +105,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà firstname.
+     * Sets the value of the firstname property.
      * 
      * @param value
      *     allowed object is
@@ -115,7 +117,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà healthProfile.
+     * Gets the value of the healthProfile property.
      * 
      * @return
      *     possible object is
@@ -127,7 +129,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà healthProfile.
+     * Sets the value of the healthProfile property.
      * 
      * @param value
      *     allowed object is
@@ -139,7 +141,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà idPerson.
+     * Gets the value of the idPerson property.
      * 
      */
     public long getIdPerson() {
@@ -147,7 +149,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà idPerson.
+     * Sets the value of the idPerson property.
      * 
      */
     public void setIdPerson(long value) {
@@ -155,7 +157,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà lastname.
+     * Gets the value of the lastname property.
      * 
      * @return
      *     possible object is
@@ -167,7 +169,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà lastname.
+     * Sets the value of the lastname property.
      * 
      * @param value
      *     allowed object is
@@ -179,7 +181,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà password.
+     * Gets the value of the password property.
      * 
      * @return
      *     possible object is
@@ -191,7 +193,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà password.
+     * Sets the value of the password property.
      * 
      * @param value
      *     allowed object is
@@ -203,7 +205,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà sex.
+     * Gets the value of the sex property.
      * 
      * @return
      *     possible object is
@@ -215,7 +217,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà sex.
+     * Sets the value of the sex property.
      * 
      * @param value
      *     allowed object is
@@ -227,7 +229,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà telegramID.
+     * Gets the value of the telegramID property.
      * 
      * @return
      *     possible object is
@@ -239,7 +241,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà telegramID.
+     * Sets the value of the telegramID property.
      * 
      * @param value
      *     allowed object is
@@ -251,7 +253,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà telegramUsername.
+     * Gets the value of the telegramUsername property.
      * 
      * @return
      *     possible object is
@@ -263,7 +265,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà telegramUsername.
+     * Sets the value of the telegramUsername property.
      * 
      * @param value
      *     allowed object is
@@ -275,7 +277,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà username.
+     * Gets the value of the username property.
      * 
      * @return
      *     possible object is
@@ -287,7 +289,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà username.
+     * Sets the value of the username property.
      * 
      * @param value
      *     allowed object is
@@ -299,7 +301,7 @@ public class Person {
     }
 
     /**
-     * Recupera il valore della proprietà usernameVisible.
+     * Gets the value of the usernameVisible property.
      * 
      * @return
      *     possible object is
@@ -311,7 +313,7 @@ public class Person {
     }
 
     /**
-     * Imposta il valore della proprietà usernameVisible.
+     * Sets the value of the usernameVisible property.
      * 
      * @param value
      *     allowed object is

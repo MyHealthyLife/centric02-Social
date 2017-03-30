@@ -27,7 +27,7 @@ import myhealthylife.centric2.util.Utilities;
 import myhealthylife.dataservice.soap.DataService;
 import myhealthylife.dataservice.soap.HealthProfile;
 import myhealthylife.dataservice.soap.Measure;
-import myhealthylife.dataservice.soap.MeasureHistory;
+import myhealthylife.dataservice.soap.MeasureHystory;
 import myhealthylife.dataservice.soap.Person;
 import myhealtylife.optimalparamters.soap.AgeRange;
 import myhealtylife.optimalparamters.soap.OptimalParameters;
@@ -58,7 +58,7 @@ public class RankingHandler {
 		List<Parameter> pl = gs.readOptimalParameters().getParameters();
 		
 		// Gets the name of all the users
-		List<Person> personList = ds.listPeople().getPerson();
+		List<Person> personList = ds.listPeople().getPersons();
 		
 		// The set with the assigned points for each user
 		Map<String,Double> usersAndPoints = new HashMap<String,Double>();
@@ -70,7 +70,7 @@ public class RankingHandler {
 			// Gets the data of the user
 			Person singlePerson = personList.get(i);
 			HealthProfile spHp = singlePerson.getHealthProfile();
-			MeasureHistory mh = ds.getMeasureHistory(singlePerson.getIdPerson());
+			MeasureHystory mh = ds.getMeasureHistory(singlePerson.getIdPerson());
 			
 			if(mh!=null) {
 			
@@ -106,7 +106,7 @@ public class RankingHandler {
 			// Checks if the healthprofile is null
 			if(spHp!=null) {
 				
-				List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasure();
+				List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasures();
 				
 				// Assigns point to each user for the number of steps and weight
 				for(int j=0;j<measureSP.size();j++) {
@@ -218,7 +218,7 @@ public class RankingHandler {
 					
 					if(spHp!=null) {
 						
-						List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasure();
+						List<Measure> measureSP = singlePerson.getHealthProfile().getCurrentHealth().getMeasures();
 						
 						// Checks the "weight" and "steps" measure in order to add the current values to the person rank
 						for(int k=0;k<measureSP.size();k++) {

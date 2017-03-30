@@ -6,13 +6,14 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per people complex type.
+ * <p>Java class for people complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="people">
@@ -30,26 +31,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "people", propOrder = {
-    "person"
+    "persons"
 })
+@XmlRootElement(name = "people")
 public class People {
 
-    @XmlElement(nillable = true)
-    protected List<Person> person;
+    @XmlElement(name = "person", nillable = true)
+    protected List<Person> persons;
 
     /**
-     * Gets the value of the person property.
+     * Gets the value of the persons property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the person property.
+     * This is why there is not a <CODE>set</CODE> method for the persons property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPerson().add(newItem);
+     *    getPersons().add(newItem);
      * </pre>
      * 
      * 
@@ -59,11 +61,11 @@ public class People {
      * 
      * 
      */
-    public List<Person> getPerson() {
-        if (person == null) {
-            person = new ArrayList<Person>();
+    public List<Person> getPersons() {
+        if (persons == null) {
+            persons = new ArrayList<Person>();
         }
-        return this.person;
+        return this.persons;
     }
 
 }

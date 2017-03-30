@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per getCurrentHealthResponse complex type.
+ * <p>Java class for getCurrentHealthResponse complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="getCurrentHealthResponse">
@@ -29,12 +30,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getCurrentHealthResponse", propOrder = {
     "currentHealth"
 })
+@XmlRootElement(name = "getCurrentHealthResponse")
 public class GetCurrentHealthResponse {
 
     protected CurrentHealth currentHealth;
 
     /**
-     * Recupera il valore della proprietà currentHealth.
+     * Gets the value of the currentHealth property.
      * 
      * @return
      *     possible object is
@@ -46,7 +48,7 @@ public class GetCurrentHealthResponse {
     }
 
     /**
-     * Imposta il valore della proprietà currentHealth.
+     * Sets the value of the currentHealth property.
      * 
      * @param value
      *     allowed object is

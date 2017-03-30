@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per getMeasure complex type.
+ * <p>Java class for getMeasure complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="getMeasure">
@@ -29,12 +30,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getMeasure", propOrder = {
     "arg0"
 })
+@XmlRootElement(name = "getMeasure")
 public class GetMeasure {
 
     protected long arg0;
 
     /**
-     * Recupera il valore della proprietà arg0.
+     * Gets the value of the arg0 property.
      * 
      */
     public long getArg0() {
@@ -42,7 +44,7 @@ public class GetMeasure {
     }
 
     /**
-     * Imposta il valore della proprietà arg0.
+     * Sets the value of the arg0 property.
      * 
      */
     public void setArg0(long value) {

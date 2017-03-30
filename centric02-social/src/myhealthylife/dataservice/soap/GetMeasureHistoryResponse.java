@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per getMeasureHistoryResponse complex type.
+ * <p>Java class for getMeasureHistoryResponse complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="getMeasureHistoryResponse">
@@ -29,31 +30,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getMeasureHistoryResponse", propOrder = {
     "measureHistory"
 })
+@XmlRootElement(name = "getMeasureHistoryResponse")
 public class GetMeasureHistoryResponse {
 
-    protected MeasureHistory measureHistory;
+    protected MeasureHystory measureHistory;
 
     /**
-     * Recupera il valore della proprietà measureHistory.
+     * Gets the value of the measureHistory property.
      * 
      * @return
      *     possible object is
-     *     {@link MeasureHistory }
+     *     {@link MeasureHystory }
      *     
      */
-    public MeasureHistory getMeasureHistory() {
+    public MeasureHystory getMeasureHistory() {
         return measureHistory;
     }
 
     /**
-     * Imposta il valore della proprietà measureHistory.
+     * Sets the value of the measureHistory property.
      * 
      * @param value
      *     allowed object is
-     *     {@link MeasureHistory }
+     *     {@link MeasureHystory }
      *     
      */
-    public void setMeasureHistory(MeasureHistory value) {
+    public void setMeasureHistory(MeasureHystory value) {
         this.measureHistory = value;
     }
 

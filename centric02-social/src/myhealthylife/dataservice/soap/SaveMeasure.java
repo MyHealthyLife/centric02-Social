@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per saveMeasure complex type.
+ * <p>Java class for saveMeasure complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="saveMeasure">
@@ -31,13 +32,14 @@ import javax.xml.bind.annotation.XmlType;
     "arg0",
     "arg1"
 })
+@XmlRootElement(name = "saveMeasure")
 public class SaveMeasure {
 
     protected long arg0;
     protected Measure arg1;
 
     /**
-     * Recupera il valore della proprietà arg0.
+     * Gets the value of the arg0 property.
      * 
      */
     public long getArg0() {
@@ -45,7 +47,7 @@ public class SaveMeasure {
     }
 
     /**
-     * Imposta il valore della proprietà arg0.
+     * Sets the value of the arg0 property.
      * 
      */
     public void setArg0(long value) {
@@ -53,7 +55,7 @@ public class SaveMeasure {
     }
 
     /**
-     * Recupera il valore della proprietà arg1.
+     * Gets the value of the arg1 property.
      * 
      * @return
      *     possible object is
@@ -65,7 +67,7 @@ public class SaveMeasure {
     }
 
     /**
-     * Imposta il valore della proprietà arg1.
+     * Sets the value of the arg1 property.
      * 
      * @param value
      *     allowed object is

@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per deleteMeasureResponse complex type.
+ * <p>Java class for deleteMeasureResponse complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="deleteMeasureResponse">
@@ -29,12 +30,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "deleteMeasureResponse", propOrder = {
     "mid"
 })
+@XmlRootElement(name = "deleteMeasureResponse")
 public class DeleteMeasureResponse {
 
     protected long mid;
 
     /**
-     * Recupera il valore della proprietà mid.
+     * Gets the value of the mid property.
      * 
      */
     public long getMid() {
@@ -42,7 +44,7 @@ public class DeleteMeasureResponse {
     }
 
     /**
-     * Imposta il valore della proprietà mid.
+     * Sets the value of the mid property.
      * 
      */
     public void setMid(long value) {

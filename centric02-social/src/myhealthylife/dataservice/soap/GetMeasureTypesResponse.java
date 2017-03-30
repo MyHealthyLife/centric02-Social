@@ -3,13 +3,14 @@ package myhealthylife.dataservice.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per getMeasureTypesResponse complex type.
+ * <p>Java class for getMeasureTypesResponse complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="getMeasureTypesResponse">
@@ -29,31 +30,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getMeasureTypesResponse", propOrder = {
     "measureTypes"
 })
+@XmlRootElement(name = "getMeasureTypesResponse")
 public class GetMeasureTypesResponse {
 
-    protected MeasureTypeList measureTypes;
+    protected MeasureTypes measureTypes;
 
     /**
-     * Recupera il valore della proprietà measureTypes.
+     * Gets the value of the measureTypes property.
      * 
      * @return
      *     possible object is
-     *     {@link MeasureTypeList }
+     *     {@link MeasureTypes }
      *     
      */
-    public MeasureTypeList getMeasureTypes() {
+    public MeasureTypes getMeasureTypes() {
         return measureTypes;
     }
 
     /**
-     * Imposta il valore della proprietà measureTypes.
+     * Sets the value of the measureTypes property.
      * 
      * @param value
      *     allowed object is
-     *     {@link MeasureTypeList }
+     *     {@link MeasureTypes }
      *     
      */
-    public void setMeasureTypes(MeasureTypeList value) {
+    public void setMeasureTypes(MeasureTypes value) {
         this.measureTypes = value;
     }
 
