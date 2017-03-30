@@ -47,8 +47,46 @@ public class RankingHandler {
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Response getUserRank(@PathParam("username") String username, @QueryParam("bot") Boolean botSchema){
+	public List<PersonRank> getUserRankDetailedSchema(@PathParam("username") String username){
 
+		DataService ds = ServicesLocator.getDataServiceConnection();
+		
+		// Gets the name of all the users
+		List<Person> personList = ds.listPeople().getPersons();
+		
+		Map<String, Double> usersAndPointsSorted = this.buildRankingMapped();
+		
+		// Builds a Rank object and calculates a filtered ranking based on the position of the user
+		Rank rankObj = new Rank();
+		List<PersonRank> detailedList = this.getDetailedList(personList, rankObj.getFinalRankingMapFiltered(username, usersAndPointsSorted));
+		
+		return detailedList;
+	}
+	
+	
+	
+	@Path("/bot/{username}")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Rank getUserRankBotSchema(@PathParam("username") String username){
+		
+		Map<String, Double> usersAndPointsSorted = this.buildRankingMapped();
+	
+		// Builds a Rank object and calculates a filtered ranking based on the position of the user
+		Rank rankObj = new Rank();
+		rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
+	
+	    // Returns the filtered ranking
+		return rankObj;
+		
+		
+	}
+	
+	
+	
+	private Map<String, Double> buildRankingMapped() {
+		
 		int yearToday = Calendar.getInstance().get(Calendar.YEAR);
 		
 		DataService ds = ServicesLocator.getDataServiceConnection();
@@ -62,7 +100,6 @@ public class RankingHandler {
 		
 		// The set with the assigned points for each user
 		Map<String,Double> usersAndPoints = new HashMap<String,Double>();
-		
 		
 		// For all the people in the database
 		for(int i=0;i<personList.size();i++) {
@@ -160,23 +197,9 @@ public class RankingHandler {
 		
 		// Sorts the hashmap by its values
 		Map<String, Double> usersAndPointsSorted = this.sortByValue(usersAndPoints);
-
-		if(botSchema) {
 		
-			// Builds a Rank object and calculates a filtered ranking based on the position of the user
-			Rank rankObj = new Rank();
-			rankObj.setCompactRanking(rankObj.getFinalRankingFiltered(username, usersAndPointsSorted));
+		return usersAndPointsSorted;
 		
-	        // Returns the filtered ranking
-			return Utilities.throwOK(rankObj);
-		}
-		
-		
-		// Builds a Rank object and calculates a filtered ranking based on the position of the user
-		Rank rankObj = new Rank();
-		List<PersonRank> detailedList = this.getDetailedList(personList, rankObj.getFinalRankingMapFiltered(username, usersAndPointsSorted));
-		
-		return Utilities.throwOK(detailedList);
 	}
 	
 	
