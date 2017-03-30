@@ -200,6 +200,42 @@ public class SentenceHandler {
 	
 	
 	
+	@Path("/{username}/{sentenceId}")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getSpecificSentences(@PathParam("username") String username, @PathParam("sentenceId") Integer sentenceId){
+
+		DataService ds = ServicesLocator.getDataServiceConnection();
+		Sentences ss = ServicesLocator.getSentenceGeneratorConnection();
+		
+		// Gets the user
+		Person user = ds.getPersonByUsername(username);
+		
+		// Checks if the user exists
+		if(user==null) {
+			
+			return Utilities.throwResourceNotFound();
+			
+		}
+		
+		// Get specific sentence based on the identifier provided by the user
+		Sentence sentenceToReturn = ss.readSentence(sentenceId);
+		
+		// Checks if the sentence is null
+		if(sentenceToReturn==null) {
+			
+			return Utilities.throwNoContent();
+			
+		}
+        
+        // Returns the sentence to the user
+		return Utilities.throwOK(sentenceToReturn);
+		
+	}
+	
+	
+	
 	
 	
 	@Path("/")

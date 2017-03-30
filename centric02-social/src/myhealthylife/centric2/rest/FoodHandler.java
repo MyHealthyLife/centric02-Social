@@ -1,5 +1,12 @@
 package myhealthylife.centric2.rest;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +21,8 @@ import javax.xml.ws.Holder;
 import myhealthylife.centric2.util.ServicesLocator;
 import myhealthylife.centric2.util.Utilities;
 import myhealthylife.nutritionservice.soap.Food;
+import myhealthylife.nutritionservice.soap.FoodType;
+import myhealthylife.nutritionservice.soap.FoodTypes;
 import myhealthylife.nutritionservice.soap.Foods;
 import myhealthylife.nutritionservice.soap.Foods_Type;
 
@@ -50,6 +59,55 @@ public class FoodHandler {
         
         // Returns the list of foods
 		return Utilities.throwOK(foodListToReturn);
+		
+	}
+	
+	
+	@Path("/foodTypes")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getAllFoodTypes(){
+
+		Foods fs = ServicesLocator.getFoodServiceConnection();
+		
+		// Gets the food types to return (all the types present in the database)
+		FoodTypes foodTypesListToReturn = fs.readFoodTypeList();
+        List<FoodType> foodTypesList = foodTypesListToReturn.getFoodTypes();
+        
+        // Map object is required to filter results
+        Map<String,Long> listWithoutDuplicates = new HashMap<>();
+        
+        // Copies the attributes of ever type in the new hashmap
+        for(int i=0;i<foodTypesList.size();i++) {
+        	
+        	FoodType singleType = foodTypesList.get(i);
+        	listWithoutDuplicates.put(singleType.getCategory(), singleType.getIdFoodType());
+        	
+        }
+        
+        // Clears the list
+        foodTypesList.clear();
+        
+        // Iterates through the hashmap that contains unique objects
+        Iterator iterator = listWithoutDuplicates.entrySet().iterator();
+        while (iterator.hasNext()) {
+            
+        	Map.Entry pair = (Map.Entry)iterator.next();
+            
+        	// Creates a new type and assigns the attributes extracted from the hashmap
+        	FoodType singleType = new FoodType();
+        	singleType.setCategory((String)pair.getKey());
+        	singleType.setIdFoodType((Long)pair.getValue());
+        	
+            iterator.remove();
+            
+            foodTypesList.add(singleType);
+        }
+        
+        
+        // Returns the list of food types (without duplicates)
+		return Utilities.throwOK(foodTypesListToReturn);
 		
 	}
 	
