@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for readRandomSentenceByTypeAndTrend complex type.
+ * <p>Classe Java per readRandomSentenceByTypeAndTrend complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="readRandomSentenceByTypeAndTrend">
@@ -39,7 +39,7 @@ public class ReadRandomSentenceByTypeAndTrend {
     protected Boolean motive;
 
     /**
-     * Gets the value of the sentenceType property.
+     * Recupera il valore della proprietà sentenceType.
      * 
      * @return
      *     possible object is
@@ -51,7 +51,7 @@ public class ReadRandomSentenceByTypeAndTrend {
     }
 
     /**
-     * Sets the value of the sentenceType property.
+     * Imposta il valore della proprietà sentenceType.
      * 
      * @param value
      *     allowed object is
@@ -63,7 +63,7 @@ public class ReadRandomSentenceByTypeAndTrend {
     }
 
     /**
-     * Gets the value of the motive property.
+     * Recupera il valore della proprietà motive.
      * 
      * @return
      *     possible object is
@@ -75,7 +75,7 @@ public class ReadRandomSentenceByTypeAndTrend {
     }
 
     /**
-     * Sets the value of the motive property.
+     * Imposta il valore della proprietà motive.
      * 
      * @param value
      *     allowed object is

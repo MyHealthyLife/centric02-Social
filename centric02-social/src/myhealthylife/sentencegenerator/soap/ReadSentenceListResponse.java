@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for readSentenceListResponse complex type.
+ * <p>Classe Java per readSentenceListResponse complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="readSentenceListResponse">
@@ -36,7 +36,7 @@ public class ReadSentenceListResponse {
     protected Sentences_Type sentenceList;
 
     /**
-     * Gets the value of the sentenceList property.
+     * Recupera il valore della proprietà sentenceList.
      * 
      * @return
      *     possible object is
@@ -48,7 +48,7 @@ public class ReadSentenceListResponse {
     }
 
     /**
-     * Sets the value of the sentenceList property.
+     * Imposta il valore della proprietà sentenceList.
      * 
      * @param value
      *     allowed object is

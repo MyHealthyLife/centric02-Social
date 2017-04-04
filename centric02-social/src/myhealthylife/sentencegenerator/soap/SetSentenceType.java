@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for setSentenceType complex type.
+ * <p>Classe Java per setSentenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
  * &lt;complexType name="setSentenceType">
@@ -39,7 +39,7 @@ public class SetSentenceType {
     protected long typeId;
 
     /**
-     * Gets the value of the sentenceId property.
+     * Recupera il valore della proprietà sentenceId.
      * 
      */
     public long getSentenceId() {
@@ -47,7 +47,7 @@ public class SetSentenceType {
     }
 
     /**
-     * Sets the value of the sentenceId property.
+     * Imposta il valore della proprietà sentenceId.
      * 
      */
     public void setSentenceId(long value) {
@@ -55,7 +55,7 @@ public class SetSentenceType {
     }
 
     /**
-     * Gets the value of the typeId property.
+     * Recupera il valore della proprietà typeId.
      * 
      */
     public long getTypeId() {
@@ -63,7 +63,7 @@ public class SetSentenceType {
     }
 
     /**
-     * Sets the value of the typeId property.
+     * Imposta il valore della proprietà typeId.
      * 
      */
     public void setTypeId(long value) {
