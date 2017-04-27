@@ -31,25 +31,32 @@ import myhealthylife.nutritionservice.soap.Foods;
 @Path("/recipe")
 public class RecipesHandler {
 	
+	/**
+	 * Retrieves all the recipes in the database of service04 that have a maximum amount of calories specified by the user in the input parameters
+	 * @param maxCal max calories for the recipes
+	 * @return
+	 */
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public RecipeList getRecipesByCalories(@QueryParam("maxCal") Integer maxCal){
 		RecipeList rl=new RecipeList();
-		rl.setRecipes(Recipe.getAll());
+		rl.setRecipes(Recipe.getAll());//get all recipes
 		Iterator<Recipe> it=rl.getRecipes().iterator();
 		
+		/*in this db are stored only the id of the foods
+		 * for every recipe get the food dtalis from the service4 and compute its calories*/
 		while(it.hasNext()){
 			Recipe r=it.next();
-			r.computeFoods();
-			r.computeCalories();
+			r.computeFoods(); //retrieve all food details for the recipe
+			r.computeCalories();//compute calories for the recipe
 			
 			
 		}
 		
 		for(int i=0;i<rl.getRecipes().size();i++){
 			Recipe r=rl.getRecipes().get(i);
-			if(maxCal!=null){
+			if(maxCal!=null){ //if the attribute max calories is set remove every recipe which exceed the max calories
 				if(r.getCalories()>maxCal){
 					rl.getRecipes().remove(r);
 					i--;
@@ -60,21 +67,33 @@ public class RecipesHandler {
 		return rl;
 	}
 	
+	/**
+	 * Retrieves a recipe memorized in this service. The retrieved recipe is the one identified by 'recipeId' parameter.
+	 * @param recipeID
+	 * @return
+	 */
 	@GET
 	@Path("/id/{recipeID}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Response getRecipeById(@PathParam("recipeID") Long recipeID){
 		Recipe r=Recipe.getRecipeById(recipeID);
+		
+		/*check if recipe exits*/
 		if(r==null)
 			return Utilities.throwResourceNotFound();
 		
-		r.computeFoods();
-		r.computeCalories();
+		r.computeFoods(); //retrieve all food details for the recipe
+		r.computeCalories();//compute calories for the recipe
 		
 		return Utilities.throwOK(r);
 	}
 	
+	/**
+	 * Retrieves a Recipe memorized in this service. It performs a search in the local database in order to retrieve all the recipes with a similar name.
+	 * @param recipeName
+	 * @return
+	 */
 	@GET
 	@Path("/name/{recipeName}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -82,9 +101,10 @@ public class RecipesHandler {
 	public RecipeList searchRecipesByName(@PathParam("recipeName") String recipeName){
 		RecipeList rl=new RecipeList();
 		
-		rl.setRecipes(Recipe.getRecipesByName(recipeName));
+		rl.setRecipes(Recipe.getRecipesByName(recipeName));//get all recipe by name
 		
-		for (int i=0;i<rl.getRecipes().size();i++){
+		/*for every recipe compute calories and retrieve food details*/
+		for (int i=0;i<rl.getRecipes().size();i++){ 
 			rl.getRecipes().get(i).computeFoods();
 			rl.getRecipes().get(i).computeCalories();
 		}
@@ -92,18 +112,30 @@ public class RecipesHandler {
 		return rl;
 	}
 	
-	
+	/**
+	 * Saves a recipe the user placed in the body of the request. The recipe will be saved in the local database. 
+	 * Once the recipe is saved it will be also returned to the caller.
+	 * @param r
+	 * @return
+	 */
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Recipe saveRecipe(Recipe r){
-		r.computeIDS();
-		r=Recipe.saveRecipe(r);
+		r.computeIDS(); //retrieve ids from foods before saving
+		r=Recipe.saveRecipe(r); //save recipe
 		r.computeFoods();
 		r.computeCalories();
 		return r;
 	}
 	
+	/**
+	 * Updates an existing recipe already present in the database. The recipe with the updated values is provided by the user
+	 * and needs to be placed in the body of the request. The recipe will be updated in the local database. 
+	 * Once the recipe is saved it will be also returned to the caller.
+	 * @param r
+	 * @return
+	 */
 	@PUT
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -127,6 +159,13 @@ public class RecipesHandler {
 		
 	}
 	
+	/**
+	 *  Delete an existing recipe already present in the database. 
+	 *  The user needs to specify the identifier of the recipe in the path parameters. 
+	 *  Once the recipe is saved it will be also returned to the caller.
+	 * @param recipeId
+	 * @return
+	 */
 	@DELETE
 	@Path("/{recipeId}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -152,6 +191,13 @@ public class RecipesHandler {
 	
 	private Integer MAX_CAL_PER_RECIPE = 1000;
 	
+	/**
+	 * Gets suggested recipes for the user. The suggested recipes are retrieved by analysing the measures of the user. If the user,
+	 * for instance, needs to loose weight the system will set
+	 * a maximum amount of calories for a recipe and will perform a search using that parameter to filter the results.
+	 * @param username
+	 * @return
+	 */
 	@Path("/suggested/{username}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
