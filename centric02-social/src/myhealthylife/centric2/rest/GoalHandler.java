@@ -25,6 +25,14 @@ import myhealtylife.optimalparamters.soap.ParametersList;
 @Path("/goals")
 public class GoalHandler {
 
+	/**
+	 * Returns the goals for each measure type for the age range (and sex) requested by the caller. 
+	 * In fact, all the query parameters are required in order to filter the search.
+	 * @param sex
+	 * @param ageFrom
+	 * @param ageTo
+	 * @return
+	 */
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -34,12 +42,15 @@ public class GoalHandler {
 		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
 		
 		if(sex==null){
+			/*if sex and age range are not set retrieve all parameters*/
 			if(ageFrom==null && ageTo==null){
 				List<Parameter> param= op.readOptimalParameters().getParameters();
 				gl.setGoals(param);
 				
 			}
 			else{
+				
+				/*if sex is not set retrive the paramater for the age range for the both sex.*/
 				if(ageFrom==null){
 					ageFrom=0;
 				}
@@ -57,15 +68,19 @@ public class GoalHandler {
 				gl.setGoals(tot);
 			}
 		}else {
+			/*if the sex is set and age range is not set retrieve all parameter for the sex*/
 			if(ageFrom==null && ageTo==null){
 				List<Parameter> param=op.readOptimalParametersBySex(sex).getParameters();
 				gl.setGoals(param);
 			}
+			/*else retrieve all parameter filtered for age range and sex*/
 			else{
+				/*if only the max get is set, set the minimum to 0*/
 				if(ageFrom==null){
 					ageFrom=0;
 				}
 				
+				/*if only the min age is set, set the maximum to 200*/
 				if(ageTo==null){
 					ageTo=200;
 				}
@@ -80,6 +95,10 @@ public class GoalHandler {
 		
 	}
 	
+	/**
+	 *  Returns all the available age ranges memorized in service03. The ranges are returned as AgeRangeList object which contains a list of AgeRange objects.
+	 * @return
+	 */
 	@GET
 	@Path("/ageranges")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -88,20 +107,26 @@ public class GoalHandler {
 		return ServicesLocator.getOptimalParameterConnection().readAgeRanges();
 	}
 	
-	@POST
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	/**
 	 * create a new goal (a.k.a. a parameter for the service03)
 	 * @param p
 	 * @return
 	 */
+	@POST
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Parameter createNewGoal(Parameter p){
 		OptimalParameters op=ServicesLocator.getOptimalParameterConnection();
 		p=op.createParameter(p);
 		return p;
 	}
 	
+	/**
+	 * Edits and updates an existing goal in the database. The goal already exists and the updated version will be provided by the caller. 
+	 * The changes will be memorized in service03 database. It will eventually return the same object if the update succeeded.
+	 * @param p
+	 * @return
+	 */
 	@PUT
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
