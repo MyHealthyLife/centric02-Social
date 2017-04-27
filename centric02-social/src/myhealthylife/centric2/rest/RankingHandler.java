@@ -43,6 +43,13 @@ public class RankingHandler {
 	final private double WEIGHT_DISTANCE_POINTS_MIN = 1;
 	final private double WEIGHT_DISTANCE_MULFACTOR = 5;
 	
+	
+	/**
+	 * Returns the closest ranking positions to a user. The ranking is returned as a detailed object containing all the information related+
+	 * to single users
+	 * @param username The username that is needed to construct the closest ranking
+	 * @return A list of objects describing the detailed ranking closest to the user
+	 */
 	@Path("/{username}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -64,7 +71,11 @@ public class RankingHandler {
 	}
 	
 	
-	
+	/**
+	 * Returns the closest ranking positions to a user. The ranking is returned as a simple object that can be parsed by the bot
+	 * @param username The username that is needed to construct the closest ranking
+	 * @return A Rank object containing the closest ranking position of the user
+	 */
 	@Path("/bot/{username}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -84,7 +95,10 @@ public class RankingHandler {
 	}
 	
 	
-	
+	/**
+	 * Builds a simple ranking object containing the usernames and the related points that have been calculated
+	 * @return A Map object containing usernames (as keys) and the assigned points (the values)
+	 */
 	private Map<String, Double> buildRankingMapped() {
 		
 		int yearToday = Calendar.getInstance().get(Calendar.YEAR);
@@ -211,23 +225,29 @@ public class RankingHandler {
 	 */
 	private List<PersonRank> getDetailedList(List<Person> personList, Map<String,Double> compactMap) {
 		
+		// List to return with the detailed ranking
 		List<PersonRank> pRankList = new ArrayList<PersonRank>();
 		
 		List<String> usernamesAlreadyAdded = new ArrayList<>();
 
 		Iterator<String> iKeys = compactMap.keySet().iterator();
 		
+		// For every username in the map we get the details from the whole list of users
 		for(int i=0;i<compactMap.size();i++) {
 			
+			// Selects the current key (username) and value (points)
 			String currentKey = iKeys.next();
 			Double currentValue = compactMap.get(currentKey);
 			
+			// For every person in the list we try to find the user that has that specific username (the selected key)
 			for(int j=0;j<personList.size();j++) {
 				
 				Person singlePerson = personList.get(j);
 				
+				// Check if the username has already been added to the list
 				if(!usernamesAlreadyAdded.contains(singlePerson.getUsername()) && singlePerson.getUsername().equals(currentKey)) {
 					
+					// Creates a PersonRank object and adds all the details of that person
 					PersonRank singlePersonRank = new PersonRank();
 					singlePersonRank.setIdPerson(singlePerson.getIdPerson());
 					singlePersonRank.setFirstname(singlePerson.getFirstname());
@@ -236,7 +256,7 @@ public class RankingHandler {
 					singlePersonRank.setSex(singlePerson.getSex());
 					singlePersonRank.setPoints(currentValue);
 					
-					
+					// Gets the health profile of that person
 					HealthProfile spHp = singlePerson.getHealthProfile();
 					
 					if(spHp!=null) {
@@ -248,17 +268,19 @@ public class RankingHandler {
 							
 							Measure singleMeasure = measureSP.get(k);
 							
-							// Assigns points for "weight" measure
+							// Adds the current measure for the weight
 							if(singleMeasure.getMeasureType().equals("weight")) {
 								singlePersonRank.setWeight(singleMeasure.getMeasureValue());
 							}
 							
+							// Adds the current measure for the steps
 							if(singleMeasure.getMeasureType().equals("steps")) {
 								singlePersonRank.setSteps(singleMeasure.getMeasureValue());
 							}
 						}
 					}
 					
+					// Adds the telegram username if available
 					if(singlePerson.getTelegramUsername()!=null && singlePerson.getTelegramID()!=null) {
 						singlePersonRank.setTelegramUsernameAvailable(true);
 						if(singlePerson.isUsernameVisible()) {
@@ -273,8 +295,10 @@ public class RankingHandler {
 						singlePersonRank.setTelegramUsernameAvailable(false);
 					}
 					
+					// The PersonRank object is finally added to the list
 					pRankList.add(singlePersonRank);
 					
+					// The username is added to the list in order to avoid duplicates
 					usernamesAlreadyAdded.add(singlePerson.getUsername());
 					
 				}

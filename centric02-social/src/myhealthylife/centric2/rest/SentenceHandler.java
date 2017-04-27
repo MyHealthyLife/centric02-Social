@@ -34,7 +34,13 @@ import myhealthylife.sentencegenerator.soap.Sentences;
 @Path("/sentence")
 public class SentenceHandler {
 
-	
+	/**
+	 * Sends a specific sentence to a specific user
+	 * @param username1 The sender user
+	 * @param username2 The destination user
+	 * @param sentenceId The sentence identifier of the sentence in service 02
+	 * @return The dedicated sentence object that has been sent to the other user
+	 */
 	@Path("/{username1}/{username2}/{sentenceId}")
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -78,7 +84,15 @@ public class SentenceHandler {
 	}
 	
 	
-	
+	/**
+	 * Sends a sentence to a specific user. The selected sentence is chosen by the system, which considers the
+	 * type (e.g. steps) and the motive (e.g. gain) specified by the sender as input parameters
+	 * @param username1 The sender user
+	 * @param username2 The destination user
+	 * @param sentenceType The sentence type that must be considered by the system while choosing the sentence
+	 * @param motive The sentence motive (either gain or loss) that must be considered by the system while choosing the sentence
+	 * @return The dedicated sentence object that has been sent to the other user
+	 */
 	@Path("/{username1}/{username2}/{type}/{motive}")
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -137,7 +151,11 @@ public class SentenceHandler {
 	}
 	
 	
-	
+	/**
+	 * Gets all the sentences the other users dedicated to you
+	 * @param username The user that wants to retrieve all the sentences the other users dedicated to him/her
+	 * @return The list of dedicated sentence the other users sent to this user
+	 */
 	@Path("/{username}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -199,7 +217,12 @@ public class SentenceHandler {
 	}
 	
 	
-	
+	/**
+	 * Gets a specific sentence based on the identifier in input. The identifier is the one related to service 02
+	 * @param username The user that wants to retrieve the sentence
+	 * @param sentenceId The identifier of the sentence that needs to be retrieved
+	 * @return The Sentence object containing the information related to that sentence
+	 */
 	@Path("/{username}/{sentenceId}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -237,7 +260,11 @@ public class SentenceHandler {
 	
 	
 	
-	
+	/**
+	 * Gives the possibility to create a sentence
+	 * @param sentenceToSave The Sentence object containing the details of the Sentence
+	 * @return The new Sentence that has been created
+	 */
 	@Path("/")
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
